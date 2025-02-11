@@ -40,14 +40,14 @@ namespace SchoolProject.Service.Implementations
             return student;
         }
 
-        public async Task<bool> AddStudentAsync(Student student)
+        public async Task<string> AddStudentAsync(Student student)
         {
             var studentResult = _studentRepository.GetTableNoTracking()
                 .Where(s => s.Name == student.Name).FirstOrDefault();
             if (studentResult != null)
-                return false;
+                return "Exists";
             await _studentRepository.AddAsync(student);
-            return true;
+            return "Success";
         }
         #endregion
     }
