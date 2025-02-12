@@ -3,7 +3,7 @@ using SchoolProject.Data.Entities;
 
 namespace SchoolProject.Core.Features.Students.Commands.Handlers
 {
-    public class StudentCommandHandler :ResponseHandler, IRequestHandler<AddStudentCommand, Response<string>>
+    public class StudentCommandHandler : ResponseHandler, IRequestHandler<AddStudentCommand, Response<AddStudentCommand>>
     {
         #region Fields
         private readonly IStudentService _studentService;
@@ -19,19 +19,18 @@ namespace SchoolProject.Core.Features.Students.Commands.Handlers
         #endregion
 
         #region Handle Methods
-        public async Task<Response<string>> Handle(AddStudentCommand request, CancellationToken cancellationToken)
+        public async Task<Response<AddStudentCommand>> Handle(AddStudentCommand request, CancellationToken cancellationToken)
         {
             //mapping Between request and student
             var student = _mapper.Map<Student>(request);
             //add
             var result = await _studentService.AddStudentAsync(student);
+            var studentCommand = _mapper.Map<AddStudentCommand>(result);
             //check condition and return Response
-            if (result == "Exists")
-                return UnprocessableEntity<string>("Name is Exists!");
-            else if (result == "Success")
-                return Created<string>("Added Successfully!");
-            else
-                return BadRequest<string>();
+            if (result is null)
+                return BadRequest<AddStudentCommand>();
+            return Created<AddStudentCommand>(studentCommand);
+
         }
         #endregion
 

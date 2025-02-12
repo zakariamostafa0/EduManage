@@ -2,11 +2,6 @@
 using SchoolProject.Data.Entities;
 using SchoolProject.Infrastructure.Abstracts;
 using SchoolProject.Service.Abstracts;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace SchoolProject.Service.Implementations
 {
@@ -22,7 +17,7 @@ namespace SchoolProject.Service.Implementations
             _studentRepository = studentRepository;
         }
 
-       
+
         #endregion
 
         #region Handles Methods
@@ -40,10 +35,10 @@ namespace SchoolProject.Service.Implementations
             return student;
         }
 
-        public async Task<string> AddStudentAsync(Student student)
+        public async Task<Student> AddStudentAsync(Student student)
         {
-            await _studentRepository.AddAsync(student);
-            return "Success";
+            var studentResult = await _studentRepository.AddAsync(student);
+            return studentResult;
         }
 
         public async Task<bool> IsNameExist(string name)
