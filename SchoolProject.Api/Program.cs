@@ -1,8 +1,9 @@
 using Microsoft.EntityFrameworkCore;
-using SchoolProject.Infrastructure.Data;
-using SchoolProject.Infrastructure;
-using SchoolProject.Service;
 using SchoolProject.Core;
+using SchoolProject.Core.MiddlWares;
+using SchoolProject.Infrastructure;
+using SchoolProject.Infrastructure.Data;
+using SchoolProject.Service;
 
 namespace SchoolProject.Api
 {
@@ -38,6 +39,8 @@ namespace SchoolProject.Api
                 app.UseSwagger();
                 app.UseSwaggerUI();
             }
+
+            app.UseMiddleware<ErrorHandlerMiddleware>();
 
             app.UseHttpsRedirection();
 
