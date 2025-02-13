@@ -7,7 +7,7 @@
         public const string Rule = root + "/" + version + "/";
 
 
-        private const string Id = "/{id}:int";
+        private const string Id = "/{id:int}";
         public static class StudentRouting
         {
             public const string Prefix = Rule + "Student";
@@ -15,6 +15,7 @@
             public const string GetById = Prefix + Id;
             public const string Create = Prefix + "/Create";
             public const string Edit = Prefix + "/Edit";
+            public const string Delete = Prefix + "/Delete" + Id;
 
         }
     }

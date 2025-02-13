@@ -67,6 +67,27 @@ namespace SchoolProject.Service.Implementations
 
         }
 
+        public async Task<bool> DeleteStudentAsync(int id)
+        {
+            var student = await _studentRepository.GetByIdAsync(id);
+            if (student == null)
+                return false;
+
+            using var transaction = _studentRepository.BeginTransaction();
+            try
+            {
+                await _studentRepository.DeleteAsync(student);
+                await transaction.CommitAsync();
+                return true;
+            }
+            catch
+            {
+                await transaction.RollbackAsync();
+                return false;
+            }
+
+        }
+
         #endregion
     }
 }
