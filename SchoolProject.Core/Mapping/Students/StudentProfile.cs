@@ -5,7 +5,8 @@
         public StudentProfile()
         {
             GetStudentListMapping();
-            AddStudentMapping();
+            AddStudentCommandMapping();
+            EditStudentCommandMapping();
         }
     }
 }

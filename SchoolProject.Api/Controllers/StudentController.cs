@@ -1,9 +1,11 @@
-﻿namespace SchoolProject.Api.Controllers
+﻿using SchoolProject.Core.Features.Students.Commands.Models;
+
+namespace SchoolProject.Api.Controllers
 {
     [ApiController]
     public class StudentController : AppControllerBase
     {
-        
+
         [HttpGet(Router.StudentRouting.List)]
         public async Task<IActionResult> GetStudentsListAsync()
         {
@@ -12,14 +14,21 @@
         }
 
         [HttpGet(Router.StudentRouting.GetById)]
-        public async Task<IActionResult> GetStudentsByIdAsync([FromRoute]int id)
+        public async Task<IActionResult> GetStudentsByIdAsync([FromRoute] int id)
         {
             var student = await Mediator.Send(new GetStudentByIdQuery(id));
             return NewResult(student);
         }
 
         [HttpPost(Router.StudentRouting.Create)]
-        public async Task<IActionResult> CreateStudentAsyns([FromBody]AddStudentCommand command)
+        public async Task<IActionResult> CreateStudentAsyns([FromBody] AddStudentCommand command)
+        {
+            var response = await Mediator.Send(command);
+            return NewResult(response);
+        }
+
+        [HttpPut(Router.StudentRouting.Edit)]
+        public async Task<IActionResult> EditStudentAsyns([FromBody] EditStudentCommand command)
         {
             var response = await Mediator.Send(command);
             return NewResult(response);

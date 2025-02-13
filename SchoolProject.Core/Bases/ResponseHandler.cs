@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace SchoolProject.Core.Bases
+﻿namespace SchoolProject.Core.Bases
 {
     public class ResponseHandler
     {
@@ -83,5 +77,6 @@ namespace SchoolProject.Core.Bases
                 Meta = Meta
             };
         }
+
     }
 }

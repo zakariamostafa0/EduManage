@@ -1,6 +1,6 @@
 ﻿namespace SchoolProject.Core.Features.Students.Commands.Models
 {
-    public class EditStudentCommand : IRequest<Response<int>>
+    public class EditStudentCommand : IRequest<Response<EditStudentCommand>>
     {
         public int Id { get; set; }
         public string Name { get; set; }
