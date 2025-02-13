@@ -1,5 +1,4 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using SchoolProject.Data.Entities;
 using SchoolProject.Infrastructure.Abstracts;
 using SchoolProject.Service.Abstracts;
 
@@ -26,12 +25,23 @@ namespace SchoolProject.Service.Implementations
             return await _studentRepository.GetStudentsAsync();
         }
 
-        public IQueryable<Student> GetFilterStudentPaginatedQuerable(string? search)
+        public IQueryable<Student> GetFilterStudentPaginatedQuerable(StudentOrderingEnum orderingEnum, string? search)
         {
-            var student = _studentRepository.GetTableNoTracking().Include(s => s.Department).AsQueryable();
-            if (search == null)
-                return student;
-            return student.Where(s => s.Name.Contains(search) || s.Address.Contains(search));
+            var students = _studentRepository.GetTableNoTracking().Include(s => s.Department).AsQueryable();
+            if (search != null)
+                students = students.Where(s => s.Name.Contains(search) || s.Address.Contains(search));
+            switch (orderingEnum)
+            {
+                case StudentOrderingEnum.StudID:
+                    return students.OrderBy(s => s.StudID);
+                case StudentOrderingEnum.Name:
+                    return students.OrderBy(s => s.Name);
+                case StudentOrderingEnum.Address:
+                    return students.OrderBy(s => s.Address);
+                case StudentOrderingEnum.DepartmentName:
+                    return students.OrderBy(s => s.Department.DName);
+                default: return students;
+            }
         }
 
         public async Task<Student> GetStudentByIdAsync(int id)

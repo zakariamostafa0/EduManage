@@ -1,4 +1,5 @@
-﻿
+﻿global using SchoolProject.Data.Helpers.Enums;
+
 namespace SchoolProject.Core.Features.Students.Queries.Handlers
 {
     public class StudentQueryHandler : ResponseHandler,
@@ -42,7 +43,7 @@ namespace SchoolProject.Core.Features.Students.Queries.Handlers
             Expression<Func<Student, GetStudentPaginatedListResponse>> expression =
                  s => new GetStudentPaginatedListResponse(s.StudID, s.Name, s.Address, s.Department.DName);
 
-            var querable = _studentService.GetFilterStudentPaginatedQuerable(request.Search)
+            var querable = _studentService.GetFilterStudentPaginatedQuerable(request.OrederBy, request.Search)
                                           .Select(expression)
                                           .ToPaginatedListAsync(request.PageNumber ??= 0, request.PageSize ??= 0);
             return querable;
