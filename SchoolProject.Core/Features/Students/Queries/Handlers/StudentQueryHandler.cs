@@ -1,9 +1,10 @@
 ﻿
 namespace SchoolProject.Core.Features.Students.Queries.Handlers
 {
-    public class StudentQueryHandler : ResponseHandler, 
+    public class StudentQueryHandler : ResponseHandler,
                                         IRequestHandler<GetStudentListQuery, Response<List<GetStudentListResponse>>>,
-                                        IRequestHandler<GetStudentByIdQuery, Response<GetStudentListResponse>>
+                                        IRequestHandler<GetStudentByIdQuery, Response<GetStudentListResponse>>,
+                                        IRequestHandler<GetStudentPaginatedListQuery, PaginatedResult<GetStudentPaginatedListResponse>>
     {
         #region Fields
         private readonly IStudentService _studentService;
@@ -33,6 +34,19 @@ namespace SchoolProject.Core.Features.Students.Queries.Handlers
                 return NotFound<GetStudentListResponse>("NO student was found!!");
             var studentResponse = _mapper.Map<GetStudentListResponse>(student);
             return Success(studentResponse);
+        }
+
+        public Task<PaginatedResult<GetStudentPaginatedListResponse>> Handle(GetStudentPaginatedListQuery request, CancellationToken cancellationToken)
+        {
+            //Take from the student and put in the response
+            Expression<Func<Student, GetStudentPaginatedListResponse>> expression =
+                 s => new GetStudentPaginatedListResponse(s.StudID, s.Name, s.Address, s.Department.DName);
+
+            var querable = _studentService.GetFilterStudentPaginatedQuerable(request.Search)
+                                          .Select(expression)
+                                          .ToPaginatedListAsync(request.PageNumber ??= 0, request.PageSize ??= 0);
+            return querable;
+
         }
         #endregion
     }

@@ -26,6 +26,14 @@ namespace SchoolProject.Service.Implementations
             return await _studentRepository.GetStudentsAsync();
         }
 
+        public IQueryable<Student> GetFilterStudentPaginatedQuerable(string? search)
+        {
+            var student = _studentRepository.GetTableNoTracking().Include(s => s.Department).AsQueryable();
+            if (search == null)
+                return student;
+            return student.Where(s => s.Name.Contains(search) || s.Address.Contains(search));
+        }
+
         public async Task<Student> GetStudentByIdAsync(int id)
         {
             var student = _studentRepository.GetTableNoTracking()

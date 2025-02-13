@@ -1,7 +1,4 @@
-﻿
-using Microsoft.EntityFrameworkCore.ChangeTracking;
-
-namespace SchoolProject.Core.Features.Students.Queries.Models
+﻿namespace SchoolProject.Core.Features.Students.Queries.Models
 {
     public class GetStudentByIdQuery : IRequest<Response<GetStudentListResponse>>
     {
