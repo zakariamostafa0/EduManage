@@ -2,10 +2,10 @@
 {
     public class ResponseHandler
     {
-
-        public ResponseHandler()
+        private readonly IStringLocalizer<SharedResources> _localization;
+        public ResponseHandler(IStringLocalizer<SharedResources> localization)
         {
-
+            _localization = localization;
         }
         public Response<T> Deleted<T>(string? message)
         {
@@ -13,7 +13,7 @@
             {
                 StatusCode = System.Net.HttpStatusCode.OK,
                 Succeeded = true,
-                Message = message == null ? "Deleted Successfully" : message
+                Message = message == null ? _localization[SharedResourcesKeys.Delete] : message
             };
         }
         public Response<T> Success<T>(T entity, object Meta = null)
@@ -23,7 +23,7 @@
                 Data = entity,
                 StatusCode = System.Net.HttpStatusCode.OK,
                 Succeeded = true,
-                Message = "Added Successfully",
+                Message = _localization[SharedResourcesKeys.Success],
                 Meta = Meta
             };
         }
@@ -33,7 +33,7 @@
             {
                 StatusCode = System.Net.HttpStatusCode.Unauthorized,
                 Succeeded = true,
-                Message = "UnAuthorized"
+                Message = _localization[SharedResourcesKeys.UnAuthorized]
             };
         }
         public Response<T> BadRequest<T>(string Message = null)
@@ -62,7 +62,7 @@
             {
                 StatusCode = System.Net.HttpStatusCode.NotFound,
                 Succeeded = false,
-                Message = message == null ? "Not Found" : message
+                Message = message == null ? _localization[SharedResourcesKeys.NotFound] : message
             };
         }
 
@@ -73,7 +73,7 @@
                 Data = entity,
                 StatusCode = System.Net.HttpStatusCode.Created,
                 Succeeded = true,
-                Message = "Created",
+                Message = _localization[SharedResourcesKeys.Create],
                 Meta = Meta
             };
         }

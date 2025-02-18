@@ -1,4 +1,6 @@
 ﻿global using SchoolProject.Data.Helpers.Enums;
+using Microsoft.Extensions.Localization;
+using SchoolProject.Core.Resources;
 
 namespace SchoolProject.Core.Features.Students.Queries.Handlers
 {
@@ -10,13 +12,17 @@ namespace SchoolProject.Core.Features.Students.Queries.Handlers
         #region Fields
         private readonly IStudentService _studentService;
         private readonly IMapper _mapper;
+        private readonly IStringLocalizer<SharedResources> _stringLocalization;
         #endregion
 
         #region Constructors
-        public StudentQueryHandler(IStudentService studentService, IMapper mapper)
+        public StudentQueryHandler(IStudentService studentService,
+                                   IMapper mapper,
+                                   IStringLocalizer<SharedResources> stringLocalization) : base(stringLocalization)
         {
             _studentService = studentService;
             _mapper = mapper;
+            _stringLocalization = stringLocalization;
         }
         #endregion
 
@@ -32,7 +38,7 @@ namespace SchoolProject.Core.Features.Students.Queries.Handlers
         {
             var student = await _studentService.GetStudentByIdAsync(request.Id);
             if (student == null)
-                return NotFound<GetStudentListResponse>("NO student was found!!");
+                return NotFound<GetStudentListResponse>(_stringLocalization[SharedResourcesKeys.NotFound]);
             var studentResponse = _mapper.Map<GetStudentListResponse>(student);
             return Success(studentResponse);
         }

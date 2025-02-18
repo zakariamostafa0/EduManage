@@ -42,6 +42,14 @@ namespace SchoolProject.Service.Implementations
                     return students.OrderBy(s => s.Department.DName);
                 default: return students;
             }
+            //return orderingEnum switch
+            //{
+            //    StudentOrderingEnum.StudID => students.OrderBy(s => s.StudID),
+            //    StudentOrderingEnum.Name => students.OrderBy(s => s.Name),
+            //    StudentOrderingEnum.Address => students.OrderBy(s => s.Address),
+            //    StudentOrderingEnum.DepartmentName => students.OrderBy(s => s.Department.DName),
+            //    _ => students
+            //};
         }
 
         public async Task<Student> GetStudentByIdAsync(int id)

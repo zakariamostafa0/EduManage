@@ -1,6 +1,5 @@
 ﻿
 using SchoolProject.Core.Features.Students.Commands.Models;
-using SchoolProject.Data.Entities;
 
 namespace SchoolProject.Core.Features.Students.Commands.Handlers
 {
@@ -11,13 +10,17 @@ namespace SchoolProject.Core.Features.Students.Commands.Handlers
         #region Fields
         private readonly IStudentService _studentService;
         private readonly IMapper _mapper;
+        private readonly IStringLocalizer<SharedResources> _localizer;
         #endregion
 
         #region Construcors
-        public StudentCommandHandler(IStudentService studentService, IMapper mapper)
+        public StudentCommandHandler(IStudentService studentService,
+                                    IMapper mapper,
+                                    IStringLocalizer<SharedResources> localizer) : base(localizer)
         {
             _studentService = studentService;
             _mapper = mapper;
+            _localizer = localizer;
         }
         #endregion
 
