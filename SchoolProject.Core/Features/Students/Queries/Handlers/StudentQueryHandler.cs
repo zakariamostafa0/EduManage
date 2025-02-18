@@ -1,6 +1,4 @@
 ﻿global using SchoolProject.Data.Helpers.Enums;
-using Microsoft.Extensions.Localization;
-using SchoolProject.Core.Resources;
 
 namespace SchoolProject.Core.Features.Students.Queries.Handlers
 {
@@ -43,16 +41,17 @@ namespace SchoolProject.Core.Features.Students.Queries.Handlers
             return Success(studentResponse);
         }
 
-        public Task<PaginatedResult<GetStudentPaginatedListResponse>> Handle(GetStudentPaginatedListQuery request, CancellationToken cancellationToken)
+        public async Task<PaginatedResult<GetStudentPaginatedListResponse>> Handle(GetStudentPaginatedListQuery request, CancellationToken cancellationToken)
         {
             //Take from the student and put in the response
             Expression<Func<Student, GetStudentPaginatedListResponse>> expression =
                  s => new GetStudentPaginatedListResponse(s.StudID, s.Name, s.Address, s.Department.DName);
 
-            var querable = _studentService.GetFilterStudentPaginatedQuerable(request.OrederBy, request.Search)
-                                          .Select(expression)
+            var filterQuery = _studentService.GetFilterStudentPaginatedQuerable(request.OrederBy, request.Search);
+            var paginatedList = await filterQuery.Select(expression)
                                           .ToPaginatedListAsync(request.PageNumber ??= 0, request.PageSize ??= 0);
-            return querable;
+            paginatedList.Meta = new { Count = paginatedList.Data.Count() };
+            return paginatedList;
 
         }
         #endregion
