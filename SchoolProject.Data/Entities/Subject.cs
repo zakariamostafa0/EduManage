@@ -13,8 +13,8 @@
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int SubID { get; set; }
         [StringLength(500)]
-        public string SubjectName { get; set; }
-        public DateTime Period { get; set; }
+        public string? SubjectName { get; set; }
+        public DateTime? Period { get; set; }
 
         [InverseProperty(nameof(StudentSubject.Subject))]
         public virtual ICollection<StudentSubject> StudSubjects { get; set; }

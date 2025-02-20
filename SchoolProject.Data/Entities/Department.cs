@@ -14,12 +14,12 @@
         public int DID { get; set; }
 
         [StringLength(500)]
-        public string DName { get; set; }
+        public string? DName { get; set; }
 
-        public int InsManager { get; set; }
+        public int? InsManager { get; set; }
         [ForeignKey(nameof(InsManager))]
         [InverseProperty(nameof(Entities.Instructor.DepartmentManager))]
-        public virtual Instructor Instructor { get; set; }
+        public virtual Instructor? Instructor { get; set; }
 
         [InverseProperty(nameof(Student.Department))]
         public virtual ICollection<Student> Students { get; set; }

@@ -7,13 +7,15 @@
         [Key]
         public int SubId { get; set; }
 
+        public int? Grade { get; set; }
+
         [ForeignKey(nameof(StudId))]
         [InverseProperty(nameof(Entities.Student.StudentSubjects))]
-        public virtual Student Student { get; set; }
+        public virtual Student? Student { get; set; }
 
         [ForeignKey(nameof(SubId))]
         [InverseProperty(nameof(Entities.Subject.StudSubjects))]
-        public virtual Subject Subject { get; set; }
+        public virtual Subject? Subject { get; set; }
 
     }
 }
