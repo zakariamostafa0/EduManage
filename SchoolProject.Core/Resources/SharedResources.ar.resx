@@ -135,6 +135,9 @@
   <data name="NotEmpty" xml:space="preserve">
     <value>لا يمكن تركه فارغ!</value>
   </data>
+  <data name="NotExists" xml:space="preserve">
+    <value>غير موجود</value>
+  </data>
   <data name="NotFound" xml:space="preserve">
     <value>غير متوفر حاليًا!</value>
   </data>

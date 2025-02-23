@@ -26,6 +26,14 @@ namespace SchoolProject.Service.Implementations
                                                 .Include(x => x.DeptSubjects).ThenInclude(ds => ds.Subject).FirstOrDefaultAsync();
             return department;
         }
+
+        public async Task<bool> IsDepartmentExist(int id)
+        {
+            var department = await _departmentRepository.GetByIdAsync(id);
+            if (department == null)
+                return false;
+            return true;
+        }
         #endregion
     }
 }

@@ -11,9 +11,7 @@
         public const string NotEmpty = "NotEmpty";
         public const string IsExists = "IsExists";
         public const string Maximum = "Maximum";
-
-
-
+        public const string NotExists = "NotExists";
 
     }
 }
