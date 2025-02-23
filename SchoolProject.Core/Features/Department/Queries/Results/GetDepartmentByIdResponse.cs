@@ -5,7 +5,7 @@
         public int DID { get; set; }
         public string DName { get; set; }
         public string? ManagerName { get; set; }
-        public List<StudentResponse>? StudentList { get; set; }
+        public PaginatedResult<StudentResponse>? StudentListPagination { get; set; }
         public List<InstructorResponse>? InstructorList { get; set; }
         public List<SubjectsResponse>? SubjectList { get; set; }
     }
@@ -14,6 +14,11 @@
     {
         public int Id { get; set; }
         public string Name { get; set; }
+        public StudentResponse(int id, string name)
+        {
+            Id = id;
+            Name = name;
+        }
     }
     public class InstructorResponse
     {

@@ -24,6 +24,7 @@ namespace SchoolProject.Core.Features.Department.Queries.Handlers
             _studentService = studentService;
         }
         #endregion
+
         #region Handle Function
         public async Task<Response<GetDepartmentByIdResponse>> Handle(GetDepartmentByIdQuery request, CancellationToken cancellationToken)
         {
@@ -33,10 +34,10 @@ namespace SchoolProject.Core.Features.Department.Queries.Handlers
             // Mapping
             var Mapper = _mapper.Map<GetDepartmentByIdResponse>(response);
             // pagination of the student list in side the department
-            //Expression<Func<Student, StudentResponse>> expression = e => new StudentResponse(e.StudID, e.Localize(e.NameAr, e.NameEn));
-            //var StudentQuery = _studentService.GetAllStudentsByDepartmentIdQueryable(request.Id);
-            //var StudentsAfterPagination = await StudentQuery.Select(expression).ToPaginatedListAsync(request.StudentPageNumber, request.StudentPageSize);
-            //Mapper.StudentListPaginated = StudentsAfterPagination;
+            Expression<Func<Student, StudentResponse>> expression = e => new StudentResponse(e.StudID, e.Name);
+            var StudentQuery = _studentService.GetAllStudentsByDepartmentIdQueryable(request.Id);
+            var StudentsAfterPagination = await StudentQuery.Select(expression).ToPaginatedListAsync(request.StudentPageNumber, request.StudentPageSize);
+            Mapper.StudentListPagination = StudentsAfterPagination;
             return Success(Mapper);
         }
         #endregion

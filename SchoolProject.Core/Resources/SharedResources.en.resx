@@ -118,33 +118,33 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="Create" xml:space="preserve">
-    <value>created successfully</value>
+    <value>Add Successfully</value>
   </data>
   <data name="Delete" xml:space="preserve">
-    <value>is deleted succefully!</value>
+    <value>Deleted Successfully</value>
   </data>
   <data name="IsExists" xml:space="preserve">
-    <value>already existing</value>
+    <value>already exists!</value>
   </data>
   <data name="Maximum" xml:space="preserve">
-    <value>Maximum length should not be greater than </value>
+    <value>maximum leanght must not bigger than </value>
   </data>
   <data name="Name" xml:space="preserve">
     <value>Name</value>
   </data>
   <data name="NotEmpty" xml:space="preserve">
-    <value>must not be empty</value>
+    <value>should not be empty</value>
   </data>
   <data name="NotFound" xml:space="preserve">
-    <value>Not Found!</value>
+    <value>not found!</value>
   </data>
   <data name="Required" xml:space="preserve">
-    <value>This field is required</value>
+    <value>is required</value>
   </data>
   <data name="Success" xml:space="preserve">
-    <value>Operation done!</value>
+    <value>Done successfully</value>
   </data>
   <data name="UnAuthorized" xml:space="preserve">
-    <value>This user is unauthorized</value>
+    <value>is unauthorized</value>
   </data>
 </root>

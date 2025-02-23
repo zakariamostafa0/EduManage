@@ -5,6 +5,7 @@
         public Task<List<Student>> GetStudentsListAsync();
         public IQueryable<Student> GetFilterStudentPaginatedQuerable(StudentOrderingEnum OrderingEnum, string? search);
         public Task<Student> GetStudentByIdAsync(int id);
+        public IQueryable<Student> GetAllStudentsByDepartmentIdQueryable(int DId);
         public Task<Student> AddStudentAsync(Student student);
         public Task<bool> EditStudentAsync(Student student);
         public Task<bool> DeleteStudentAsync(int id);

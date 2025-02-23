@@ -108,6 +108,14 @@
 
         }
 
+        public IQueryable<Student> GetAllStudentsByDepartmentIdQueryable(int DId)
+        {
+            var students = _studentRepository.GetTableNoTracking()
+               .Where(s => s.DID == DId)
+               .AsQueryable();
+            return students;
+        }
+
         #endregion
     }
 }

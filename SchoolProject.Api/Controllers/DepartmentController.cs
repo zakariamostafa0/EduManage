@@ -6,9 +6,9 @@ namespace SchoolProject.Api.Controllers
     public class DepartmentController : AppControllerBase
     {
         [HttpGet(Router.DepartmentRouting.GetById)]
-        public async Task<IActionResult> GetDepartmentByIdAsync([FromRoute] int id)
+        public async Task<IActionResult> GetDepartmentByIdAsync([FromQuery] GetDepartmentByIdQuery query)
         {
-            var student = await Mediator.Send(new GetDepartmentByIdQuery(id));
+            var student = await Mediator.Send(query);
             return NewResult(student);
         }
     }
