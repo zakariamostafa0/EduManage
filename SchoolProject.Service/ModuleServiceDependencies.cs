@@ -1,5 +1,4 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
-using SchoolProject.Service.Abstracts;
 using SchoolProject.Service.Implementations;
 
 namespace SchoolProject.Service
@@ -9,6 +8,7 @@ namespace SchoolProject.Service
         public static IServiceCollection AddServiceDependencies(this IServiceCollection services)
         {
             services.AddScoped<IStudentService, StudentService>();
+            services.AddScoped<IDepartmentService, DepartmentService>();
             return services;
         }
     }

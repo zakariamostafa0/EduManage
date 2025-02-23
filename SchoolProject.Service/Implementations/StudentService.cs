@@ -1,8 +1,4 @@
-﻿using Microsoft.EntityFrameworkCore;
-using SchoolProject.Infrastructure.Abstracts;
-using SchoolProject.Service.Abstracts;
-
-namespace SchoolProject.Service.Implementations
+﻿namespace SchoolProject.Service.Implementations
 {
     public class StudentService : IStudentService
     {
@@ -15,8 +11,6 @@ namespace SchoolProject.Service.Implementations
         {
             _studentRepository = studentRepository;
         }
-
-
         #endregion
 
         #region Handles Methods

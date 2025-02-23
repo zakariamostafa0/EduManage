@@ -142,7 +142,7 @@
     <value>This field is required</value>
   </data>
   <data name="Success" xml:space="preserve">
-    <value>Successfully completed!</value>
+    <value>Operation done!</value>
   </data>
   <data name="UnAuthorized" xml:space="preserve">
     <value>This user is unauthorized</value>

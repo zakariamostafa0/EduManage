@@ -1,5 +1,4 @@
-﻿
-namespace SchoolProject.Service.Abstracts
+﻿namespace SchoolProject.Service.Abstracts
 {
     public interface IStudentService
     {

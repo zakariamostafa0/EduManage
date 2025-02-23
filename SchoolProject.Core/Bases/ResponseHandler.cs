@@ -2,18 +2,18 @@
 {
     public class ResponseHandler
     {
-        private readonly IStringLocalizer<SharedResources> _localization;
-        public ResponseHandler(IStringLocalizer<SharedResources> localization)
+        private readonly IStringLocalizer<SharedResources> _localizer;
+        public ResponseHandler(IStringLocalizer<SharedResources> localizer)
         {
-            _localization = localization;
+            _localizer = localizer;
         }
-        public Response<T> Deleted<T>(string? message)
+        public Response<T> Deleted<T>(string massege = null)
         {
             return new Response<T>()
             {
                 StatusCode = System.Net.HttpStatusCode.OK,
                 Succeeded = true,
-                Message = message == null ? _localization[SharedResourcesKeys.Delete] : message
+                Message = massege == null ? _localizer[SharedResourcesKeys.Delete] : massege
             };
         }
         public Response<T> Success<T>(T entity, object Meta = null)
@@ -23,17 +23,17 @@
                 Data = entity,
                 StatusCode = System.Net.HttpStatusCode.OK,
                 Succeeded = true,
-                Message = _localization[SharedResourcesKeys.Success],
+                Message = _localizer[SharedResourcesKeys.Success],
                 Meta = Meta
             };
         }
-        public Response<T> Unauthorized<T>()
+        public Response<T> Unauthorized<T>(string massege = null)
         {
             return new Response<T>()
             {
                 StatusCode = System.Net.HttpStatusCode.Unauthorized,
                 Succeeded = true,
-                Message = _localization[SharedResourcesKeys.UnAuthorized]
+                Message = massege == null ? _localizer[SharedResourcesKeys.UnAuthorized] : massege
             };
         }
         public Response<T> BadRequest<T>(string Message = null)
@@ -45,14 +45,13 @@
                 Message = Message == null ? "Bad Request" : Message
             };
         }
-
         public Response<T> UnprocessableEntity<T>(string Message = null)
         {
             return new Response<T>()
             {
                 StatusCode = System.Net.HttpStatusCode.UnprocessableEntity,
                 Succeeded = false,
-                Message = Message == null ? "Unprocessable Entity" : Message
+                Message = Message == null ? "UnprocessableEntity" : Message
             };
         }
 
@@ -62,7 +61,7 @@
             {
                 StatusCode = System.Net.HttpStatusCode.NotFound,
                 Succeeded = false,
-                Message = message == null ? _localization[SharedResourcesKeys.NotFound] : message
+                Message = message == null ? "Not Found" : message
             };
         }
 
@@ -73,10 +72,11 @@
                 Data = entity,
                 StatusCode = System.Net.HttpStatusCode.Created,
                 Succeeded = true,
-                Message = _localization[SharedResourcesKeys.Create],
+                Message = _localizer[SharedResourcesKeys.Create],
                 Meta = Meta
             };
         }
-
     }
+
+
 }
