@@ -1,8 +1,10 @@
-﻿using System.Reflection;
+﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using SchoolProject.Data.Entities.Identity;
+using System.Reflection;
 
 namespace SchoolProject.Infrastructure.Data
 {
-    public class ApplicationDBContext : DbContext
+    public class ApplicationDBContext : IdentityDbContext<ApplicationUser>
     {
         public ApplicationDBContext()
         {
@@ -10,6 +12,7 @@ namespace SchoolProject.Infrastructure.Data
         public ApplicationDBContext(DbContextOptions<ApplicationDBContext> options) : base(options)
         {
         }
+        public DbSet<ApplicationUser> ApplicationUsers { get; set; }
         public DbSet<Student> Students { get; set; }
         public DbSet<Department> Departments { get; set; }
         public DbSet<Subject> Subjects { get; set; }

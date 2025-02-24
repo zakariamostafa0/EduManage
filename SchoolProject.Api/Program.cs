@@ -24,13 +24,16 @@ namespace SchoolProject.Api
             builder.Services.AddSwaggerGen();
 
             builder.Services.AddDbContext<ApplicationDBContext>(option =>
-                option.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
-
+            {
+                option.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"));
+            });
 
             #region Dependencies Injection
             builder.Services.AddInfrastructureDependencies()
                             .AddServiceDependencies()
-                            .AddCoreDependencies();
+                            .AddCoreDependencies().AddServiceRegisteration();
+
+
             #endregion
 
             #region Localization
