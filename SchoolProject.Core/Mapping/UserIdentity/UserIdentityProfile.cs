@@ -5,6 +5,8 @@
         public UserIdentityProfile()
         {
             AddUserCommandMapping();
+            GetUsersQueryMapping();
+            GetUserByUsernameOrEmailQueryMapping();
         }
     }
 }

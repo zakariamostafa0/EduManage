@@ -1,4 +1,5 @@
 ﻿using SchoolProject.Core.Features.UserIdentity.Commands.Models;
+using SchoolProject.Core.Features.UserIdentity.Queries.Models;
 
 namespace SchoolProject.Api.Controllers
 {
@@ -11,6 +12,17 @@ namespace SchoolProject.Api.Controllers
             var response = await Mediator.Send(command);
             return NewResult(response);
         }
-
+        [HttpGet(Router.AccountRouting.Paginate)]
+        public async Task<IActionResult> GetUserPaginationAsyns([FromQuery] GetUsersPaginationQuery query)
+        {
+            var response = await Mediator.Send(query);
+            return Ok(response);
+        }
+        [HttpGet(Router.AccountRouting.GetUser)]
+        public async Task<IActionResult> GetUser([FromQuery] GetUserByUsernameOrEmailQuery query)
+        {
+            var response = await Mediator.Send(query);
+            return NewResult(response);
+        }
     }
 }

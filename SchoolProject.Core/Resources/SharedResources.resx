@@ -147,6 +147,9 @@
   <data name="Name" xml:space="preserve">
     <value>Name</value>
   </data>
+  <data name="NoEmailorUsername" xml:space="preserve">
+    <value>Make sure that your email or username is correct</value>
+  </data>
   <data name="NotEmpty" xml:space="preserve">
     <value>should not be empty</value>
   </data>
