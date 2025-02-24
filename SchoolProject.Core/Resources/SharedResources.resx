@@ -120,14 +120,29 @@
   <data name="Create" xml:space="preserve">
     <value>Add Successfully</value>
   </data>
+  <data name="CreationFaild" xml:space="preserve">
+    <value>Creation failed</value>
+  </data>
   <data name="Delete" xml:space="preserve">
     <value>Deleted Successfully</value>
+  </data>
+  <data name="EmailExist" xml:space="preserve">
+    <value>This email is already exists!</value>
+  </data>
+  <data name="InvalidEmail" xml:space="preserve">
+    <value>This is invalid email address</value>
+  </data>
+  <data name="InvalidUserName" xml:space="preserve">
+    <value>invalid user name</value>
   </data>
   <data name="IsExists" xml:space="preserve">
     <value>already exists!</value>
   </data>
   <data name="Maximum" xml:space="preserve">
     <value>maximum leanght must not bigger than </value>
+  </data>
+  <data name="Minimum" xml:space="preserve">
+    <value>Minimum length must not smaller than</value>
   </data>
   <data name="Name" xml:space="preserve">
     <value>Name</value>
@@ -149,5 +164,8 @@
   </data>
   <data name="UnAuthorized" xml:space="preserve">
     <value>is unauthorized</value>
+  </data>
+  <data name="UsernameTaken" xml:space="preserve">
+    <value>This username is already taken</value>
   </data>
 </root>

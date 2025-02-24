@@ -15,9 +15,9 @@ namespace SchoolProject.Core.Features.Students.Commands.Validators
         {
             _studentService = studentService;
             _localizer = localizer;
+            _departmentService = departmentService;
             ApplyValidataionsRules();
             ApplyCustomValidataionsRules();
-            _departmentService = departmentService;
         }
         #endregion
 

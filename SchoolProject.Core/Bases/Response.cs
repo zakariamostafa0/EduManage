@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Net;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Net;
 
 namespace SchoolProject.Core.Bases
 {
@@ -29,7 +24,13 @@ namespace SchoolProject.Core.Bases
             Succeeded = succeeded;
             Message = message;
         }
-
+        public Response(T data, string message = null, List<string> errors = null)
+        {
+            Succeeded = true;
+            Message = message;
+            Data = data;
+            Errors = errors;
+        }
         public HttpStatusCode StatusCode { get; set; }
         public object Meta { get; set; }
 
