@@ -36,13 +36,14 @@
                 Message = massege == null ? _localizer[SharedResourcesKeys.UnAuthorized] : massege
             };
         }
-        public Response<T> BadRequest<T>(string Message = null)
+        public Response<T> BadRequest<T>(string Message = null, List<string> errors = null)
         {
             return new Response<T>()
             {
                 StatusCode = System.Net.HttpStatusCode.BadRequest,
                 Succeeded = false,
-                Message = Message == null ? "Bad Request" : Message
+                Message = Message == null ? "Bad Request" : Message,
+                Errors = errors
             };
         }
         public Response<T> UnprocessableEntity<T>(string Message = null)

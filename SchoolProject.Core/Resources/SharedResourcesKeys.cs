@@ -12,6 +12,17 @@
         public const string IsExists = "IsExists";
         public const string Maximum = "Maximum";
         public const string NotExists = "NotExists";
+        public const string InvalidEmail = "InvalidEmail";
+        public const string InvalidUserName = "InvalidUserName";
+        public const string Minimum = "Minimum";
+        public const string EmailExist = "EmailExist";
+        public const string UsernameTaken = "UsernameTaken";
+        public const string CreationFaild = "CreationFaild";
+
+        public const string PasswordUppercase = "PasswordUppercase";
+        public const string PasswordLowercase = "PasswordLowercase";
+        public const string PasswordDigit = "PasswordDigit";
+        public const string PasswordSpecial = "PasswordSpecial";
 
     }
 }
