@@ -6,7 +6,7 @@ namespace SchoolProject.Core.Features.UserIdentity.Commands.Handlers
     public class UserCommandHandler : ResponseHandler,
                                       IRequestHandler<AddUserCommand, Response<bool>>,
                                       IRequestHandler<UpdateUserCommand, Response<bool>>,
-                                      IRequestHandler<DeleteUserCommand, Response<bool>>
+                                      IRequestHandler<ChangePasswordCommand, Response<string>>
     {
         #region Fields
         private readonly IUserService _userService;
@@ -73,21 +73,26 @@ namespace SchoolProject.Core.Features.UserIdentity.Commands.Handlers
             return response;
         }
 
-        public async Task<Response<bool>> Handle(DeleteUserCommand request, CancellationToken cancellationToken)
+        public async Task<Response<string>> Handle(ChangePasswordCommand request, CancellationToken cancellationToken)
         {
             var user = await _userService.UserManager.FindByIdAsync(request.Id);
             if (user == null)
-                return NotFound<bool>(_localizer[SharedResourcesKeys.NotFound]);
+                return NotFound<string>(_localizer[SharedResourcesKeys.NotFound]);
 
-            var result = await _userService.UserManager.DeleteAsync(user);
-            if (!result.Succeeded)
+            //var hasPassword = await _userService.UserManager.HasPasswordAsync(user);
+            //if (!hasPassword)
+            //{
+            //    return NotFound<string>(_localizer[SharedResourcesKeys.DoesnotHasPassword]);
+            //}
+            var changePassowrd = await _userService.UserManager.ChangePasswordAsync(user, request.CurrentPassword, request.NewPassword);
+            if (!changePassowrd.Succeeded)
             {
-                var errors = result.Errors.Select(e => e.Description).ToList();
-                return BadRequest<bool>(_localizer[SharedResourcesKeys.DeletedFaild], errors);
+                var errors = changePassowrd.Errors.Select(e => e.Description).ToList();
+                if (errors.Contains("Incorrect password."))
+                    return BadRequest<string>(_localizer[SharedResourcesKeys.IncorrectPassword], errors);
+                return BadRequest<string>(_localizer[SharedResourcesKeys.UpdatedFaild], errors);
             }
-            var response = Success<bool>(true);
-            response.Meta = new { Id = request.Id };
-            return response;
+            return Success<string>(_localizer[SharedResourcesKeys.PasswordChanged]);
         }
         #endregion
     }
