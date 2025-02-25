@@ -5,7 +5,8 @@ namespace SchoolProject.Core.Features.UserIdentity.Commands.Handlers
 {
     public class UserCommandHandler : ResponseHandler,
                                       IRequestHandler<AddUserCommand, Response<bool>>,
-                                      IRequestHandler<UpdateUserCommand, Response<bool>>
+                                      IRequestHandler<UpdateUserCommand, Response<bool>>,
+                                      IRequestHandler<DeleteUserCommand, Response<bool>>
     {
         #region Fields
         private readonly IUserService _userService;
@@ -69,6 +70,23 @@ namespace SchoolProject.Core.Features.UserIdentity.Commands.Handlers
 
             var response = Success<bool>(true);
             response.Meta = new { Id = user.Id, Name = user.FirstName + " " + user.LastName, Email = user.Email, UserName = user.UserName };
+            return response;
+        }
+
+        public async Task<Response<bool>> Handle(DeleteUserCommand request, CancellationToken cancellationToken)
+        {
+            var user = await _userService.UserManager.FindByIdAsync(request.Id);
+            if (user == null)
+                return NotFound<bool>(_localizer[SharedResourcesKeys.NotFound]);
+
+            var result = await _userService.UserManager.DeleteAsync(user);
+            if (!result.Succeeded)
+            {
+                var errors = result.Errors.Select(e => e.Description).ToList();
+                return BadRequest<bool>(_localizer[SharedResourcesKeys.DeletedFaild], errors);
+            }
+            var response = Success<bool>(true);
+            response.Meta = new { Id = request.Id };
             return response;
         }
         #endregion
