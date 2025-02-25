@@ -3,14 +3,16 @@ using SchoolProject.Core.Features.UserIdentity.Commands.Models;
 
 namespace SchoolProject.Core.Features.UserIdentity.Commands.Validators
 {
-    public class AddUserValidator : AbstractValidator<AddUserCommand>
+    public class UpdateUserValidator : AbstractValidator<UpdateUserCommand>
     {
         #region Fields
+        private readonly IUserService _userService;
         private readonly IStringLocalizer<SharedResources> _localizer;
 
         #endregion
-        public AddUserValidator(IStringLocalizer<SharedResources> localizer)
+        public UpdateUserValidator(IStringLocalizer<SharedResources> localizer, IUserService userService)
         {
+            _userService = userService;
             _localizer = localizer;
             ApplyValidataionsRules();
             ApplyCustomValidataionsRules();
@@ -30,12 +32,12 @@ namespace SchoolProject.Core.Features.UserIdentity.Commands.Validators
                 .NotEmpty().WithMessage(_localizer[SharedResourcesKeys.NotEmpty])
                 .MaximumLength(50).WithMessage($"{_localizer[SharedResourcesKeys.Maximum]} " + "50");
 
-            RuleFor(r => r.PhoneNumber)
-                .NotEmpty().WithMessage(_localizer[SharedResourcesKeys.NotEmpty])
-                .Matches(@"^(10|11|12|15)\d{8}$")
-                .WithMessage("Phone number must be 10 digits and start with 10, 11, 12, or 15.");
+            //RuleFor(r => r.PhoneNumber)
+            //    .Matches(@"^(10|11|12|15)\d{8}$")
+            //    .WithMessage("Phone number must be 10 digits and start with 10, 11, 12, or 15.");
 
             RuleFor(r => r.Address)
+                //.Must(address => string.IsNullOrWhiteSpace(address) || address.Length <= 100)
                 .NotEmpty().WithMessage(_localizer[SharedResourcesKeys.NotEmpty])
                 .MaximumLength(100).WithMessage($"{_localizer[SharedResourcesKeys.Maximum]} " + "100");
 
@@ -56,19 +58,20 @@ namespace SchoolProject.Core.Features.UserIdentity.Commands.Validators
                 .MaximumLength(50).WithMessage($"{_localizer[SharedResourcesKeys.Maximum]} 50")
                 .MinimumLength(3).WithMessage($"{_localizer[SharedResourcesKeys.Minimum]} 3");
 
-            RuleFor(r => r.Password)
-                .NotEmpty().WithMessage(_localizer[SharedResourcesKeys.Required])
-                .NotNull().WithMessage(_localizer[SharedResourcesKeys.NotEmpty]);
-            //.MinimumLength(8).WithMessage($"{_localizer[SharedResourcesKeys.Minimum]} 8")
-            //.Matches(@"[A-Z]").WithMessage(_localizer[SharedResourcesKeys.PasswordUppercase])
-            //.Matches(@"[a-z]").WithMessage(_localizer[SharedResourcesKeys.PasswordLowercase])
-            //.Matches(@"[0-9]").WithMessage(_localizer[SharedResourcesKeys.PasswordDigit])
-            //.Matches(@"[\@\!\#\$\%\^\&\*]").WithMessage(_localizer[SharedResourcesKeys.PasswordSpecial]);
         }
 
         public void ApplyCustomValidataionsRules()
         {
 
+            RuleFor(r => r.Email)
+                .MustAsync(async (model, Key, CancellationToken) =>
+                    !await _userService.IsEmailExist(Key, model.Id))
+                            .WithMessage(_localizer[SharedResourcesKeys.EmailExist]);
+
+            RuleFor(r => r.UserName)
+                .MustAsync(async (model, Key, CancellationToken) =>
+                    !await _userService.IsUserNameExist(Key, model.Id))
+                            .WithMessage(_localizer[SharedResourcesKeys.UsernameTaken]);
 
         }
         #endregion

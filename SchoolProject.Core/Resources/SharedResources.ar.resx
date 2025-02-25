@@ -147,6 +147,9 @@
   <data name="Name" xml:space="preserve">
     <value>الإسم</value>
   </data>
+  <data name="NoEmailorUsername" xml:space="preserve">
+    <value>تأكد أن البريد الإلكتروني أو اسم المستخدم صحيح</value>
+  </data>
   <data name="NotEmpty" xml:space="preserve">
     <value>لا يمكن تركه فارغ!</value>
   </data>

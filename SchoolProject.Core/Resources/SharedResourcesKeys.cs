@@ -19,6 +19,9 @@
         public const string UsernameTaken = "UsernameTaken";
         public const string CreationFaild = "CreationFaild";
 
+        public const string NoEmailorUsername = "NoEmailorUsername";
+        public const string UpdatedFaild = "UpdatedFaild";
+
         public const string PasswordUppercase = "PasswordUppercase";
         public const string PasswordLowercase = "PasswordLowercase";
         public const string PasswordDigit = "PasswordDigit";
