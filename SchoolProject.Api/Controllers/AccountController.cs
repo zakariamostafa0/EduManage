@@ -18,6 +18,12 @@ namespace SchoolProject.Api.Controllers
             var response = await Mediator.Send(command);
             return NewResult(response);
         }
+        [HttpPut(Router.AccountRouting.ChangePassword)]
+        public async Task<IActionResult> ChangeUserPasswordAsyns([FromBody] ChangePasswordCommand command)
+        {
+            var response = await Mediator.Send(command);
+            return NewResult(response);
+        }
         [HttpGet(Router.AccountRouting.Paginate)]
         public async Task<IActionResult> GetUserPaginationAsyns([FromQuery] GetUsersPaginationQuery query)
         {
