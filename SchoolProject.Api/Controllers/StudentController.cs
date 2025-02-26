@@ -1,7 +1,9 @@
-﻿using SchoolProject.Core.Features.Students.Commands.Models;
+﻿using Microsoft.AspNetCore.Authorization;
+using SchoolProject.Core.Features.Students.Commands.Models;
 namespace SchoolProject.Api.Controllers
 {
     [ApiController]
+    [Authorize]
     public class StudentController : AppControllerBase
     {
 

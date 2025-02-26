@@ -31,7 +31,8 @@ namespace SchoolProject.Api
             #region Dependencies Injection
             builder.Services.AddInfrastructureDependencies()
                             .AddServiceDependencies()
-                            .AddCoreDependencies().AddServiceRegisteration();
+                            .AddCoreDependencies()
+                            .AddServiceRegisteration(builder.Configuration);
 
 
             #endregion
@@ -96,6 +97,7 @@ namespace SchoolProject.Api
 
             app.UseCors(MyAllowSpecificOrigins);
 
+            app.UseAuthentication();
             app.UseAuthorization();
 
 
