@@ -1,4 +1,6 @@
-﻿namespace SchoolProject.Service.Abstracts
+﻿using SchoolProject.Data.Enums;
+
+namespace SchoolProject.Service.Abstracts
 {
     public interface IStudentService
     {

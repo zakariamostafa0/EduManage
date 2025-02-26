@@ -1,0 +1,8 @@
+﻿namespace SchoolProject.Core.Features.Authentication.Commands.Models
+{
+    public class LoginCommand : IRequest<Response<string>>
+    {
+        public string UserName { get; set; }
+        public string Password { get; set; }
+    }
+}

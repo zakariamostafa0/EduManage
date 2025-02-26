@@ -24,6 +24,7 @@
         public const string NoEmailorUsername = "NoEmailorUsername";
         public const string UpdatedFaild = "UpdatedFaild";
         public const string IncorrectPassword = "IncorrectPassword";
+        public const string Invalidlogin = "Invalidlogin";
         public const string DeletedFaild = "DeletedFaild";
 
         public const string PasswordUppercase = "PasswordUppercase";

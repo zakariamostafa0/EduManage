@@ -1,4 +1,4 @@
-﻿global using SchoolProject.Data.Helpers.Enums;
+﻿global using SchoolProject.Data.Enums;
 
 namespace SchoolProject.Core.Features.Students.Queries.Handlers
 {

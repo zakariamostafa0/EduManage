@@ -45,5 +45,18 @@
             public const string Delete = Prefix + "/Delete" + StringId;
 
         }
+        public static class AuthenticationRouting
+        {
+            public const string Prefix = Rule + "Authentication";
+            public const string List = Prefix + "/List";
+            public const string GetById = Prefix + IntId;
+            public const string GetUser = Prefix + "/GetUser";
+            public const string Login = Prefix + "/Login";
+            public const string Paginate = Prefix + "/Paginate";
+            public const string Edit = Prefix + "/Edit";
+            public const string ChangePassword = Prefix + "/ChangePassword";
+            public const string Delete = Prefix + "/Delete" + StringId;
+
+        }
     }
 }

@@ -1,4 +1,6 @@
-﻿namespace SchoolProject.Service.Implementations
+﻿using SchoolProject.Data.Enums;
+
+namespace SchoolProject.Service.Implementations
 {
     public class StudentService : IStudentService
     {
