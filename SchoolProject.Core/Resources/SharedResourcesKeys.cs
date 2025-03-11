@@ -26,6 +26,10 @@
         public const string IncorrectPassword = "IncorrectPassword";
         public const string Invalidlogin = "Invalidlogin";
         public const string DeletedFaild = "DeletedFaild";
+        public const string AlgorithmIsWrong = "AlgorithmIsWrong";
+        public const string TokenIsNotExpired = "TokenIsNotExpired";
+        public const string RefreshTokenIsNotFound = "RefreshTokenIsNotFound";
+        public const string RefreshTokenIsExpired = "RefreshTokenIsExpired";
 
         public const string PasswordUppercase = "PasswordUppercase";
         public const string PasswordLowercase = "PasswordLowercase";
