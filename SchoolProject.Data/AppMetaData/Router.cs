@@ -52,6 +52,8 @@
             public const string GetById = Prefix + IntId;
             public const string GetUser = Prefix + "/GetUser";
             public const string Login = Prefix + "/Login";
+            public const string RefreshToken = Prefix + "/RefreshToken";
+            public const string ValidateToken = Prefix + "/ValidateToken";
             public const string Paginate = Prefix + "/Paginate";
             public const string Edit = Prefix + "/Edit";
             public const string ChangePassword = Prefix + "/ChangePassword";
