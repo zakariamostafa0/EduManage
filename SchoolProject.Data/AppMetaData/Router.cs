@@ -43,6 +43,9 @@
             public const string Edit = Prefix + "/Edit";
             public const string ChangePassword = Prefix + "/ChangePassword";
             public const string Delete = Prefix + "/Delete" + StringId;
+            public const string RemoveUserRoles = Prefix + "/RemoveUserRoles";
+            public const string AddUserRoles = Prefix + "/AddUserRoles";
+
 
         }
         public static class AuthenticationRouting
@@ -58,6 +61,15 @@
             public const string Edit = Prefix + "/Edit";
             public const string ChangePassword = Prefix + "/ChangePassword";
             public const string Delete = Prefix + "/Delete" + StringId;
+
+        }
+
+        public static class AuthorizationRouting
+        {
+            public const string Prefix = Rule + "Authorization";
+            public const string Create = Prefix + "/Create";
+            public const string GetById = Prefix + IntId;
+
 
         }
     }

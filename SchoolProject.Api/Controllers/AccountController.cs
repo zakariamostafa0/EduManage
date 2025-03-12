@@ -42,5 +42,28 @@ namespace SchoolProject.Api.Controllers
             var response = await Mediator.Send(new DeleteUserCommand(id));
             return NewResult(response);
         }
+        [HttpPost(Router.AccountRouting.AddUserRoles)]
+        public async Task<IActionResult> AddUserRoles([FromBody] UpdateUserRoleCommand command)
+        {
+            var response = await Mediator.Send(new UpdateUserRoleCommand
+            {
+                Id = command.Id,
+                RolesName = command.RolesName
+            }, cancellationToken: default);
+
+            return NewResult(response);
+        }
+
+        [HttpDelete(Router.AccountRouting.RemoveUserRoles)]
+        public async Task<IActionResult> RemoveUserRoles([FromBody] UpdateUserRoleCommand command)
+        {
+            var response = await Mediator.Send(new UpdateUserRoleCommand
+            {
+                Id = command.Id,
+                RolesName = command.RolesName
+            }, cancellationToken: default);
+
+            return NewResult(response);
+        }
     }
 }
