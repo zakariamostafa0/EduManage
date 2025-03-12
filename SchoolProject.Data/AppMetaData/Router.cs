@@ -60,5 +60,14 @@
             public const string Delete = Prefix + "/Delete" + StringId;
 
         }
+
+        public static class AuthorizationRouting
+        {
+            public const string Prefix = Rule + "Authorization";
+            public const string Create = Prefix + "/Create";
+            public const string GetById = Prefix + IntId;
+
+
+        }
     }
 }

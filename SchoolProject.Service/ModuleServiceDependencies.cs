@@ -11,6 +11,7 @@ namespace SchoolProject.Service
             services.AddScoped<IDepartmentService, DepartmentService>();
             services.AddScoped<IUserService, UserService>();
             services.AddScoped<IAuthenticationService, AuthenticationService>();
+            services.AddScoped<IAuthorizationService, AuthorizationService>();
             // services.AddSingleton(new ConcurrentDictionary<string, RefreshToken>());
             return services;
         }
