@@ -1,9 +1,11 @@
-﻿using SchoolProject.Core.Features.UserIdentity.Commands.Models;
+﻿using Microsoft.AspNetCore.Authorization;
+using SchoolProject.Core.Features.UserIdentity.Commands.Models;
 using SchoolProject.Core.Features.UserIdentity.Queries.Models;
 
 namespace SchoolProject.Api.Controllers
 {
     [ApiController]
+    [Authorize(Roles = "Admin,User")]
     public class AccountController : AppControllerBase
     {
         [HttpPost(Router.AccountRouting.Create)]
