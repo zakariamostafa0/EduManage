@@ -3,7 +3,9 @@
 namespace SchoolProject.Core.Features.Authorization.Commands.Handlers
 {
     public class AuthorizationCommandHandler : ResponseHandler,
-                                    IRequestHandler<AddRoleCommand, Response<string>>
+                                    IRequestHandler<AddRoleCommand, Response<string>>,
+                                    IRequestHandler<UpdateRoleCommand, Response<string>>,
+                                    IRequestHandler<DeleteRoleCommand, Response<string>>
     {
         #region Fields
         private readonly IMapper _mapper;
@@ -30,7 +32,24 @@ namespace SchoolProject.Core.Features.Authorization.Commands.Handlers
             var result = await _authorizationService.AddRoleAsync(request.RoleName);
             if (result == "Success")
                 return Success(result);
-            return BadRequest<string>(_localizer[SharedResourcesKeys.CreationFaild]);
+            //return BadRequest<string>(_localizer[SharedResourcesKeys.CreationFaild]);
+            return BadRequest<string>(result);
+        }
+
+        public async Task<Response<string>> Handle(UpdateRoleCommand request, CancellationToken cancellationToken)
+        {
+            var result = await _authorizationService.EditRoleAsync(request.RoleName, request.Id);
+            if (result == "Success")
+                return Success(result);
+            return BadRequest<string>(result);
+        }
+
+        public async Task<Response<string>> Handle(DeleteRoleCommand request, CancellationToken cancellationToken)
+        {
+            var result = await _authorizationService.DeleteRoleAsync(request.Id);
+            if (result == "Success")
+                return Success(result);
+            return BadRequest<string>(result);
         }
         #endregion
     }

@@ -66,9 +66,12 @@
 
         public static class AuthorizationRouting
         {
-            public const string Prefix = Rule + "Authorization";
-            public const string Create = Prefix + "/Create";
-            public const string GetById = Prefix + IntId;
+            public const string Prefix = Rule + "Authorization/Rule";
+            public const string Create = Prefix /*+ "/Create"*/;
+            public const string Update = Prefix /*+ "/Update"*/;
+            public const string Delete = Prefix /*+ "/Delete"*/ + StringId;
+            public const string GetAll = Prefix;
+            public const string GetById = Prefix + StringId;
 
 
         }

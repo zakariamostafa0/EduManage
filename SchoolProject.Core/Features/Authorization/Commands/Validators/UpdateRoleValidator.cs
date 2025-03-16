@@ -3,7 +3,7 @@ using SchoolProject.Core.Features.Authorization.Commands.Models;
 
 namespace SchoolProject.Core.Features.Authorization.Commands.Validators
 {
-    public class AddRoleValidator : AbstractValidator<AddRoleCommand>
+    public class UpdateRoleValidator : AbstractValidator<UpdateRoleCommand>
     {
         #region Fields
         private readonly IStringLocalizer<SharedResources> _localizer;
@@ -11,7 +11,7 @@ namespace SchoolProject.Core.Features.Authorization.Commands.Validators
         #endregion
 
         #region Constructors
-        public AddRoleValidator(IStringLocalizer<SharedResources> localizer, IAuthorizationService authorizationService)
+        public UpdateRoleValidator(IStringLocalizer<SharedResources> localizer, IAuthorizationService authorizationService)
         {
             _localizer = localizer;
             _authorizationService = authorizationService;
@@ -24,6 +24,10 @@ namespace SchoolProject.Core.Features.Authorization.Commands.Validators
 
         public void ApplyValidataionsRules()
         {
+            RuleFor(r => r.Id)
+                .NotEmpty().WithMessage(_localizer[SharedResourcesKeys.NotEmpty])
+                .NotNull().WithMessage(_localizer[SharedResourcesKeys.NotEmpty]);
+
             RuleFor(r => r.RoleName)
                 .NotEmpty().WithMessage(_localizer[SharedResourcesKeys.NotEmpty])
                 .NotNull().WithMessage(_localizer[SharedResourcesKeys.NotEmpty])
@@ -33,7 +37,7 @@ namespace SchoolProject.Core.Features.Authorization.Commands.Validators
         public void ApplyCustomValidataionsRules()
         {
             RuleFor(r => r.RoleName)
-               .MustAsync(async (Key, CancellationToken) => !await _authorizationService.IsRoleNameExistAsync(Key, null))
+               .MustAsync(async (role, roleName, CancellationToken) => !await _authorizationService.IsRoleNameExistAsync(roleName, role.Id?.ToString()))
                .WithMessage(_localizer[SharedResourcesKeys.IsExists]);
         }
 
