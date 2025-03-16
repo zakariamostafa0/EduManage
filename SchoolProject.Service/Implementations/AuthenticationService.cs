@@ -32,7 +32,7 @@ namespace SchoolProject.Service.Implementations
         #region Handles Methods
         public async Task<JwtAuthResult> GetJWTToken(ApplicationUser user)
         {
-            var (jwtSecurityToken, accessToken) = GenerateJWTToken(user);
+            var (jwtSecurityToken, accessToken) = await GenerateJWTToken(user);
             var refreshToken = GetRefreshToken(user.UserName);
 
             //save refresh token to the database
@@ -72,20 +72,23 @@ namespace SchoolProject.Service.Implementations
             randomNumberGenerate.GetBytes(randomNumber);
             return Convert.ToBase64String(randomNumber);
         }
-        private List<Claim> GetClaims(ApplicationUser user)
+        private async Task<List<Claim>> GetClaimsAsync(ApplicationUser user, List<string> roles)
         {
             var claims = new List<Claim>
             {
                 new Claim(nameof(UserClaimsModel.Id), user.Id),
+                new Claim(ClaimTypes.Email, user.Email),
                 new Claim(nameof(UserClaimsModel.UserName), user.UserName),
-                new Claim(nameof(UserClaimsModel.Email), user.Email),
                 new Claim(nameof(UserClaimsModel.PhoneNumber), user.PhoneNumber),
             };
+            foreach (var role in roles)
+                claims.Add(new Claim(ClaimTypes.Role, role));
             return claims;
         }
-        private (JwtSecurityToken, string) GenerateJWTToken(ApplicationUser user)
+        private async Task<(JwtSecurityToken, string)> GenerateJWTToken(ApplicationUser user)
         {
-            var claims = GetClaims(user);
+            var roles = await _userManager.GetRolesAsync(user);
+            var claims = await GetClaimsAsync(user, roles.ToList());
 
             var symmetricSecurityKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_jwtSettings.Key));
             var signingCredentials = new SigningCredentials(symmetricSecurityKey, SecurityAlgorithms.HmacSha256Signature);
@@ -104,7 +107,7 @@ namespace SchoolProject.Service.Implementations
         public async Task<JwtAuthResult> GetRefreshToken(ApplicationUser user, JwtSecurityToken token, DateTime? expiryDate, string refreshToken)
         {
             //Generate Refresh Token
-            var (jwtSecurityToken, NewToken) = GenerateJWTToken(user);
+            var (jwtSecurityToken, NewToken) = await GenerateJWTToken(user);
             var response = new JwtAuthResult();
             response.AccessToken = NewToken;
             var refreshTokenResult = new RefreshToken();

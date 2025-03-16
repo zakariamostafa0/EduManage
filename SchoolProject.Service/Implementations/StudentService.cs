@@ -1,6 +1,4 @@
-﻿using SchoolProject.Data.Enums;
-
-namespace SchoolProject.Service.Implementations
+﻿namespace SchoolProject.Service.Implementations
 {
     public class StudentService : IStudentService
     {
@@ -70,22 +68,30 @@ namespace SchoolProject.Service.Implementations
 
         public async Task<bool> IsNameExist(string name, int? id = null)
         {
+            //if (id is not null)
+            //{
+            //    var studentResult = _studentRepository.GetTableNoTracking()
+            //    .Where(s => s.Name == name & !s.StudID.Equals(id)).FirstOrDefault();
+            //    if (studentResult == null)
+            //        return false;
+            //    return true;
+            //}
+            //else
+            //{
+            //    var studentResult = _studentRepository.GetTableNoTracking()
+            //    .Where(s => s.Name == name).FirstOrDefault();
+            //    if (studentResult == null)
+            //        return false;
+            //    return true;
+            //}
+            var query = _studentRepository.GetTableNoTracking().Where(s => s.Name == name);
+
             if (id is not null)
             {
-                var studentResult = _studentRepository.GetTableNoTracking()
-                .Where(s => s.Name == name & !s.StudID.Equals(id)).FirstOrDefault();
-                if (studentResult == null)
-                    return false;
-                return true;
+                query = query.Where(s => s.StudID != id);
             }
-            else
-            {
-                var studentResult = _studentRepository.GetTableNoTracking()
-                .Where(s => s.Name == name).FirstOrDefault();
-                if (studentResult == null)
-                    return false;
-                return true;
-            }
+
+            return await query.AnyAsync();
 
         }
 
