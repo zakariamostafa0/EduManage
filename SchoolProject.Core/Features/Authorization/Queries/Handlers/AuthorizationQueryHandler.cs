@@ -5,8 +5,8 @@ namespace SchoolProject.Core.Features.Authorization.Queries.Handlers
 {
     public class AuthorizationQueryHandler : ResponseHandler,
                                         IRequestHandler<GetRolesListQuery, Response<List<GetRoleResult>>>,
-                                        IRequestHandler<GetRoleByIdQuery, Response<GetRoleResult>>
-
+                                        IRequestHandler<GetRoleByIdQuery, Response<GetRoleResult>>,
+                                    IRequestHandler<ManageUserRolesQuery, Response<ManageUserRolesResult>>
     {
         #region Fields
         private readonly IMapper _mapper;
@@ -44,7 +44,13 @@ namespace SchoolProject.Core.Features.Authorization.Queries.Handlers
             var result = _mapper.Map<GetRoleResult>(role);
             return Success(result);
         }
-
+        public async Task<Response<ManageUserRolesResult>> Handle(ManageUserRolesQuery request, CancellationToken cancellationToken)
+        {
+            var result = await _authorizationService.GetRolesForUserAsync(request.UserId);
+            if (!result.Success)
+                return NotFound<ManageUserRolesResult>(_localizer[SharedResourcesKeys.UserNotFound]);
+            return Success(result);
+        }
         #endregion
     }
 }

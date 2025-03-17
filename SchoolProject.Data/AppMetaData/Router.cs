@@ -43,8 +43,8 @@
             public const string Edit = Prefix + "/Edit";
             public const string ChangePassword = Prefix + "/ChangePassword";
             public const string Delete = Prefix + "/Delete" + StringId;
-            public const string RemoveUserRoles = Prefix + "/RemoveUserRoles";
-            public const string AddUserRoles = Prefix + "/AddUserRoles";
+            //public const string RemoveUserRoles = Prefix + "/RemoveUserRoles";
+            //public const string AddUserRoles = Prefix + "/AddUserRoles";
 
 
         }
@@ -72,6 +72,9 @@
             public const string Delete = Prefix /*+ "/Delete"*/ + StringId;
             public const string GetAll = Prefix;
             public const string GetById = Prefix + StringId;
+            public const string GetUserRoles = Prefix + "/GetRolesForUser" + "/{userId}";
+            public const string UpdateUserRoles = Prefix + "/UpdateUserRoles";
+
 
 
         }

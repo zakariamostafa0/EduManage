@@ -1,4 +1,5 @@
-﻿using SchoolProject.Data.Entities.Identity;
+﻿using SchoolProject.Data.DTOs;
+using SchoolProject.Data.Entities.Identity;
 
 namespace SchoolProject.Service.Abstracts
 {
@@ -11,5 +12,8 @@ namespace SchoolProject.Service.Abstracts
         public Task<ApplicationRole> GetRoleById(string id);
         public Task<bool> IsRoleNameExistAsync(string roleName, string? id);
         public Task<bool> IsRoleExist(string id);
+        public Task<ManageUserRolesResult> GetRolesForUserAsync(string userId);
+        public Task<string> UpdateUserRolesAsync(ManageUserRolesResult request);
+
     }
 }

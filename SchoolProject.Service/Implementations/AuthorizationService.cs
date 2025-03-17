@@ -1,6 +1,8 @@
 ﻿
 using Microsoft.AspNetCore.Identity;
+using SchoolProject.Data.DTOs;
 using SchoolProject.Data.Entities.Identity;
+using SchoolProject.Infrastructure.Data;
 
 namespace SchoolProject.Service.Implementations
 {
@@ -9,12 +11,14 @@ namespace SchoolProject.Service.Implementations
         #region Fields
         private readonly RoleManager<ApplicationRole> _roleManager;
         private readonly UserManager<ApplicationUser> _userManager;
+        private readonly ApplicationDBContext _dbContext;
         #endregion
         #region Constructors
-        public AuthorizationService(RoleManager<ApplicationRole> roleManager, UserManager<ApplicationUser> userManager)
+        public AuthorizationService(RoleManager<ApplicationRole> roleManager, UserManager<ApplicationUser> userManager, ApplicationDBContext dbContext)
         {
             _roleManager = roleManager;
             _userManager = userManager;
+            _dbContext = dbContext;
         }
         #endregion
         #region Handle Methods
@@ -86,6 +90,73 @@ namespace SchoolProject.Service.Implementations
         public async Task<ApplicationRole> GetRoleById(string id)
         {
             return await _roleManager.FindByIdAsync(id);
+        }
+
+        public async Task<ManageUserRolesResult> GetRolesForUserAsync(string userId)
+        {
+            var user = await _userManager.FindByIdAsync(userId);
+            if (user == null)
+            {
+                return new ManageUserRolesResult
+                {
+                    Success = false,
+                };
+            }
+
+            var userRoleNames = await _userManager.GetRolesAsync(user);
+            var userRoles = await _roleManager.Roles.ToListAsync();
+
+            var roles = new List<Roles>();
+            foreach (var item in userRoles)
+            {
+                var role = new Roles();
+                role.Id = item.Id;
+                role.Name = item.Name;
+                if (userRoleNames.Contains(item.Name))
+                    role.HasRole = true;
+                roles.Add(role);
+            }
+            var userRolesResult = new ManageUserRolesResult
+            {
+                UserId = user.Id,
+                Success = true,
+                Roles = roles
+            };
+            return userRolesResult;
+        }
+
+        public async Task<string> UpdateUserRolesAsync(ManageUserRolesResult request)
+        {
+            var transact = await _dbContext.Database.BeginTransactionAsync();
+            try
+            {
+                //Get User
+                var user = await _userManager.FindByIdAsync(request.UserId.ToString());
+                if (user == null)
+                {
+                    return "UserIsNull";
+                }
+                //get user Old Roles
+                var userRoles = await _userManager.GetRolesAsync(user);
+                //Delete OldRoles
+                var removeResult = await _userManager.RemoveFromRolesAsync(user, userRoles);
+                if (!removeResult.Succeeded)
+                    return "FailedToRemoveOldRoles";
+                var selectedRoles = request.Roles.Where(x => x.HasRole == true).Select(x => x.Name);
+
+                //Add the Roles HasRole=True
+                var addRolesresult = await _userManager.AddToRolesAsync(user, selectedRoles);
+                if (!addRolesresult.Succeeded)
+                    return "FailedToAddNewRoles";
+                await transact.CommitAsync();
+                //return Result
+                return "Success";
+            }
+            catch (Exception ex)
+            {
+                await transact.RollbackAsync();
+                return "FailedToUpdateUserRoles";
+            }
         }
 
         #endregion

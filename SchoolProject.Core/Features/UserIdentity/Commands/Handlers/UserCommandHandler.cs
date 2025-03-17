@@ -8,8 +8,8 @@ namespace SchoolProject.Core.Features.UserIdentity.Commands.Handlers
     public class UserCommandHandler : ResponseHandler,
                                       IRequestHandler<AddUserCommand, Response<bool>>,
                                       IRequestHandler<UpdateUserCommand, Response<bool>>,
-                                      IRequestHandler<ChangePasswordCommand, Response<string>>,
-                                      IRequestHandler<UpdateUserRoleCommand, Response<bool>>
+                                      IRequestHandler<ChangePasswordCommand, Response<string>>
+    //IRequestHandler<UpdateUserRoleCommand, Response<bool>>
     {
         #region Fields
         private readonly IUserService _userService;
@@ -105,28 +105,28 @@ namespace SchoolProject.Core.Features.UserIdentity.Commands.Handlers
             return Success<string>(_localizer[SharedResourcesKeys.PasswordChanged]);
         }
 
-        public async Task<Response<bool>> Handle(UpdateUserRoleCommand request, CancellationToken cancellationToken)
-        {
-            var user = await _userService.UserManager.FindByIdAsync(request.Id);
-            if (user == null)
-                return NotFound<bool>(_localizer[SharedResourcesKeys.NotFound]);
+        //public async Task<Response<bool>> Handle(UpdateUserRoleCommand request, CancellationToken cancellationToken)
+        //{
+        //    var user = await _userService.UserManager.FindByIdAsync(request.Id);
+        //    if (user == null)
+        //        return NotFound<bool>(_localizer[SharedResourcesKeys.NotFound]);
 
-            bool isAddingRoles = _httpContextAccessor.HttpContext?.Request.Method == HttpMethods.Post;
+        //    bool isAddingRoles = _httpContextAccessor.HttpContext?.Request.Method == HttpMethods.Post;
 
-            IdentityResult result = isAddingRoles
-                ? await _userService.UserManager.AddToRolesAsync(user, request.RolesName)
-                : await _userService.UserManager.RemoveFromRolesAsync(user, request.RolesName);
+        //    IdentityResult result = isAddingRoles
+        //        ? await _userService.UserManager.AddToRolesAsync(user, request.RolesName)
+        //        : await _userService.UserManager.RemoveFromRolesAsync(user, request.RolesName);
 
-            if (!result.Succeeded)
-            {
-                var errors = result.Errors.Select(e => e.Description).ToList();
-                return BadRequest<bool>(isAddingRoles
-                    ? _localizer[SharedResourcesKeys.UpdatedFaild]
-                    : _localizer[SharedResourcesKeys.RemovalFailed], errors);
-            }
+        //    if (!result.Succeeded)
+        //    {
+        //        var errors = result.Errors.Select(e => e.Description).ToList();
+        //        return BadRequest<bool>(isAddingRoles
+        //            ? _localizer[SharedResourcesKeys.UpdatedFaild]
+        //            : _localizer[SharedResourcesKeys.RemovalFailed], errors);
+        //    }
 
-            return Success<bool>(true);
-        }
+        //    return Success<bool>(true);
+        //}
 
         #endregion
     }
