@@ -66,14 +66,19 @@
 
         public static class AuthorizationRouting
         {
-            public const string Prefix = Rule + "Authorization/Rule";
-            public const string Create = Prefix /*+ "/Create"*/;
-            public const string Update = Prefix /*+ "/Update"*/;
-            public const string Delete = Prefix /*+ "/Delete"*/ + StringId;
-            public const string GetAll = Prefix;
-            public const string GetById = Prefix + StringId;
-            public const string GetUserRoles = Prefix + "/GetRolesForUser" + "/{userId}";
-            public const string UpdateUserRoles = Prefix + "/UpdateUserRoles";
+            public const string Prefix = Rule + "Authorization";
+            public const string Role = Prefix + "/Role";
+            public const string Claim = Prefix + "/Claim";
+            public const string CreateRole = Role /*+ "/Create"*/;
+            public const string UpdateRole = Role /*+ "/Update"*/;
+            public const string DeleteRole = Role /*+ "/Delete"*/ + StringId;
+            public const string GetAllRoles = Role;
+            public const string GetRoleById = Role + StringId;
+            public const string GetUserRoles = Role + "/GetRolesForUser" + "/{userId}";
+            public const string UpdateUserRoles = Role + "/UpdateUserRoles";
+            public const string GetUserClaims = Claim + "/GetUserClaims" + "/{userId}";
+            public const string UpdateUserClaims = Claim + "/UpdateUserClaims";
+
 
 
 

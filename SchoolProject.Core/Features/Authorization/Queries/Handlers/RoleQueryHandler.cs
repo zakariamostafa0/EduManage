@@ -3,7 +3,7 @@ using SchoolProject.Core.Features.Authorization.Queries.Results;
 
 namespace SchoolProject.Core.Features.Authorization.Queries.Handlers
 {
-    public class AuthorizationQueryHandler : ResponseHandler,
+    public class RoleQueryHandler : ResponseHandler,
                                         IRequestHandler<GetRolesListQuery, Response<List<GetRoleResult>>>,
                                         IRequestHandler<GetRoleByIdQuery, Response<GetRoleResult>>,
                                     IRequestHandler<ManageUserRolesQuery, Response<ManageUserRolesResult>>
@@ -15,7 +15,7 @@ namespace SchoolProject.Core.Features.Authorization.Queries.Handlers
         #endregion
 
         #region Construcors
-        public AuthorizationQueryHandler(IMapper mapper,
+        public RoleQueryHandler(IMapper mapper,
                                     IStringLocalizer<SharedResources> localizer,
                                     IAuthorizationService authorizationService) : base(localizer)
         {

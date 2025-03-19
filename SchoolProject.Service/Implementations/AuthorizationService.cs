@@ -1,8 +1,10 @@
 ﻿
 using Microsoft.AspNetCore.Identity;
-using SchoolProject.Data.DTOs;
 using SchoolProject.Data.Entities.Identity;
+using SchoolProject.Data.Helpers;
+using SchoolProject.Data.Results;
 using SchoolProject.Infrastructure.Data;
+using System.Security.Claims;
 
 namespace SchoolProject.Service.Implementations
 {
@@ -158,7 +160,67 @@ namespace SchoolProject.Service.Implementations
                 return "FailedToUpdateUserRoles";
             }
         }
+        public async Task<ManageUserClaimsResult> GetUserClaimsAsync(string userId)
+        {
+            var user = await _userManager.FindByIdAsync(userId);
+            if (user == null)
+            {
+                return new ManageUserClaimsResult
+                {
+                    Success = false,
+                };
+            }
 
+            var allUserClaims = await _userManager.GetClaimsAsync(user);
+            //var userRoles = await _roleManager.Roles.ToListAsync();
+
+            var userClaimList = new List<UserClaims>();
+            foreach (var item in ClaimStore.claims)
+            {
+                var userClaim = new UserClaims();
+                userClaim.Type = item.Type;
+                if (allUserClaims.Any(c => c.Type == item.Type))
+                    userClaim.Value = true;
+                userClaimList.Add(userClaim);
+            }
+            var userRolesResult = new ManageUserClaimsResult
+            {
+                UserId = user.Id,
+                Success = true,
+                UserClaims = userClaimList
+            };
+            return userRolesResult;
+        }
+        public async Task<string> UpdateUserClaimsAsync(ManageUserClaimsResult request)
+        {
+            var transact = await _dbContext.Database.BeginTransactionAsync();
+            try
+            {
+                var user = await _userManager.FindByIdAsync(request.UserId.ToString());
+                if (user == null)
+                {
+                    return "UserIsNull";
+                }
+                var userClaims = await _userManager.GetClaimsAsync(user);
+
+                var removeResult = await _userManager.RemoveClaimsAsync(user, userClaims);
+                if (!removeResult.Succeeded)
+                    return "FailedToRemoveOldClaims";
+                var selectedClaims = request.UserClaims.Where(x => x.Value == true).Select(x => new Claim(x.Type, x.Value.ToString()));
+
+                var addClaimsresult = await _userManager.AddClaimsAsync(user, selectedClaims);
+                if (!addClaimsresult.Succeeded)
+                    return "FailedToAddNewClaims";
+
+                await transact.CommitAsync();
+                return "Success";
+            }
+            catch (Exception ex)
+            {
+                await transact.RollbackAsync();
+                return "FailedToUpdateUserClaims";
+            }
+        }
         #endregion
 
     }

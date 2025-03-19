@@ -59,9 +59,9 @@ namespace SchoolProject.Core.Features.Authorization.Commands.Handlers
             switch (result)
             {
                 case "UserIsNull": return NotFound<string>(_localizer[SharedResourcesKeys.UserNotFound]);
-                case "FailedToRemoveOldRoles": return BadRequest<string>(_localizer[SharedResourcesKeys.FailedToRemoveOldRoles]);
-                case "FailedToAddNewRoles": return BadRequest<string>(_localizer[SharedResourcesKeys.FailedToAddNewRoles]);
-                case "FailedToUpdateUserRoles": return BadRequest<string>(_localizer[SharedResourcesKeys.FailedToUpdateUserRoles]);
+                case "FailedToRemoveOldRoles": return BadRequest<string>(_localizer[SharedResourcesKeys.FailedToRemoveOldClaims]);
+                case "FailedToAddNewRoles": return BadRequest<string>(_localizer[SharedResourcesKeys.FailedToAddNewClaims]);
+                case "FailedToUpdateUserRoles": return BadRequest<string>(_localizer[SharedResourcesKeys.FailedToUpdateUserCliams]);
             }
             return Success<string>(_localizer[SharedResourcesKeys.Success]);
         }

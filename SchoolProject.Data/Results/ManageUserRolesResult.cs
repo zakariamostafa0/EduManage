@@ -1,6 +1,6 @@
 ﻿using System.Text.Json.Serialization;
 
-namespace SchoolProject.Data.DTOs
+namespace SchoolProject.Data.Results
 {
     public class ManageUserRolesResult
     {

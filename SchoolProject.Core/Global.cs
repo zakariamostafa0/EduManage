@@ -7,8 +7,8 @@ global using SchoolProject.Core.Features.Students.Queries.Models;
 global using SchoolProject.Core.Features.Students.Queries.Results;
 global using SchoolProject.Core.Resources;
 global using SchoolProject.Core.Wrapper;
-global using SchoolProject.Data.DTOs;
 global using SchoolProject.Data.Entities;
+global using SchoolProject.Data.Results;
 global using SchoolProject.Service.Abstracts;
 global using System.Linq.Expressions;
 
