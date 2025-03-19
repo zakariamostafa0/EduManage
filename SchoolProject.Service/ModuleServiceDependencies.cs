@@ -12,6 +12,7 @@ namespace SchoolProject.Service
             services.AddScoped<IUserService, UserService>();
             services.AddScoped<IAuthenticationService, AuthenticationService>();
             services.AddScoped<IAuthorizationService, AuthorizationService>();
+            services.AddScoped<IEmailService, EmailService>();
             // services.AddSingleton(new ConcurrentDictionary<string, RefreshToken>());
             return services;
         }

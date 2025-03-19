@@ -25,6 +25,9 @@
     <Folder Include="Features\Department\Commands\Handlers\" />
     <Folder Include="Features\Department\Commands\Models\" />
     <Folder Include="Features\Department\Commands\Validators\" />
+    <Folder Include="Features\Emails\Queries\Handlers\" />
+    <Folder Include="Features\Emails\Queries\Models\" />
+    <Folder Include="Features\Emails\Queries\Results\" />
     <Folder Include="Mapping\Departments\CommandMapping\" />
     <Folder Include="Mapping\RoleIdentity\CommandMapping\" />
   </ItemGroup>

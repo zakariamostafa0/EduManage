@@ -78,10 +78,11 @@
             public const string UpdateUserRoles = Role + "/UpdateUserRoles";
             public const string GetUserClaims = Claim + "/GetUserClaims" + "/{userId}";
             public const string UpdateUserClaims = Claim + "/UpdateUserClaims";
-
-
-
-
+        }
+        public static class EmailRouting
+        {
+            public const string Prefix = Rule + "Email";
+            //public const string SendEmail = Rule + "/SendEmail";
         }
     }
 }
