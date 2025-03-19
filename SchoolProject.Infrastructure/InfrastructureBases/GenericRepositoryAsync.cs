@@ -1,6 +1,4 @@
-﻿using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Storage;
-using SchoolProject.Infrastructure.Data;
+﻿using Microsoft.EntityFrameworkCore.Storage;
 
 namespace SchoolProject.Infrastructure.InfrastructureBases
 {
@@ -32,7 +30,11 @@ namespace SchoolProject.Infrastructure.InfrastructureBases
             return await _dbContext.Set<T>().FindAsync(id);
         }
 
+        public virtual async Task<T> GetByIdStringAsync(string id)
+        {
 
+            return await _dbContext.Set<T>().FindAsync(id);
+        }
         public IQueryable<T> GetTableNoTracking()
         {
             return _dbContext.Set<T>().AsNoTracking().AsQueryable();

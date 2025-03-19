@@ -94,6 +94,28 @@ namespace SchoolProject.Infrastructure
                 });
             });
 
+            services.AddAuthorization(option =>
+            {
+                option.AddPolicy("DeleteStudent", policy =>
+                {
+                    policy
+                    .RequireRole("Admin")
+                    .RequireClaim("Delete Student", "True");
+                });
+                option.AddPolicy("UpdateStudent", policy =>
+                {
+                    policy
+                    .RequireRole("Admin")
+                    .RequireClaim("Update Student", "True");
+                });
+                option.AddPolicy("CreateStudent", policy =>
+                {
+                    policy
+                    .RequireRole("Admin")
+                    .RequireClaim("Create Student", "True");
+                });
+            });
+
             return services;
         }
     }

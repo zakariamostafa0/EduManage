@@ -105,7 +105,6 @@ namespace SchoolProject.Service.Implementations
                 };
             }
 
-            var userRoleNames = await _userManager.GetRolesAsync(user);
             var userRoles = await _roleManager.Roles.ToListAsync();
 
             var roles = new List<Roles>();
@@ -114,7 +113,7 @@ namespace SchoolProject.Service.Implementations
                 var role = new Roles();
                 role.Id = item.Id;
                 role.Name = item.Name;
-                if (userRoleNames.Contains(item.Name))
+                if (await _userManager.IsInRoleAsync(user, role.Name))
                     role.HasRole = true;
                 roles.Add(role);
             }

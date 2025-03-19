@@ -72,7 +72,7 @@ namespace SchoolProject.Service.Implementations
             randomNumberGenerate.GetBytes(randomNumber);
             return Convert.ToBase64String(randomNumber);
         }
-        private async Task<List<Claim>> GetClaimsAsync(ApplicationUser user, List<string> roles)
+        private async Task<List<Claim>> GetClaimsAsync(ApplicationUser user)
         {
             var claims = new List<Claim>
             {
@@ -81,14 +81,19 @@ namespace SchoolProject.Service.Implementations
                 new Claim(nameof(UserClaimsModel.UserName), user.UserName),
                 new Claim(nameof(UserClaimsModel.PhoneNumber), user.PhoneNumber),
             };
+
+            var userClaims = await _userManager.GetClaimsAsync(user);
+            claims.AddRange(userClaims);
+
+            var roles = await _userManager.GetRolesAsync(user);
             foreach (var role in roles)
                 claims.Add(new Claim(ClaimTypes.Role, role));
             return claims;
         }
         private async Task<(JwtSecurityToken, string)> GenerateJWTToken(ApplicationUser user)
         {
-            var roles = await _userManager.GetRolesAsync(user);
-            var claims = await GetClaimsAsync(user, roles.ToList());
+            //var roles = await _userManager.GetRolesAsync(user);
+            var claims = await GetClaimsAsync(user);
 
             var symmetricSecurityKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_jwtSettings.Key));
             var signingCredentials = new SigningCredentials(symmetricSecurityKey, SecurityAlgorithms.HmacSha256Signature);

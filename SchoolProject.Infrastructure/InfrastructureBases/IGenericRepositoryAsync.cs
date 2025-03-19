@@ -1,9 +1,4 @@
 ﻿using Microsoft.EntityFrameworkCore.Storage;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace SchoolProject.Infrastructure.InfrastructureBases
 {
@@ -11,6 +6,7 @@ namespace SchoolProject.Infrastructure.InfrastructureBases
     {
         Task DeleteRangeAsync(ICollection<T> entities);
         Task<T> GetByIdAsync(int id);
+        Task<T> GetByIdStringAsync(string id);
         Task SaveChangesAsync();
         IDbContextTransaction BeginTransaction();
         void Commit();

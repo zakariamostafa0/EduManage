@@ -13,12 +13,12 @@
         public static class StudentRouting
         {
             public const string Prefix = Rule + "Student";
-            public const string List = Prefix + "/List";
+            public const string List = Prefix /*+ "/List"*/;
             public const string GetById = Prefix + IntId;
-            public const string Create = Prefix + "/Create";
+            public const string Create = Prefix /*+ "/Create"*/;
             public const string Paginate = Prefix + "/Paginate";
-            public const string Edit = Prefix + "/Edit";
-            public const string Delete = Prefix + "/Delete" + IntId;
+            public const string Update = Prefix /*+ "/Update"*/;
+            public const string Delete = Prefix /*+ "/Delete"*/ + IntId;
 
         }
         public static class DepartmentRouting
