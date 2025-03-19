@@ -2,10 +2,11 @@
 
 namespace SchoolProject.Core.Features.Authorization.Commands.Handlers
 {
-    public class AuthorizationCommandHandler : ResponseHandler,
+    public class RoleCommandHandler : ResponseHandler,
                                     IRequestHandler<AddRoleCommand, Response<string>>,
                                     IRequestHandler<UpdateRoleCommand, Response<string>>,
-                                    IRequestHandler<DeleteRoleCommand, Response<string>>
+                                    IRequestHandler<DeleteRoleCommand, Response<string>>,
+                                    IRequestHandler<UpdateUserRolesCommand, Response<string>>
     {
         #region Fields
         private readonly IMapper _mapper;
@@ -14,7 +15,7 @@ namespace SchoolProject.Core.Features.Authorization.Commands.Handlers
         #endregion
 
         #region Construcors
-        public AuthorizationCommandHandler(IMapper mapper,
+        public RoleCommandHandler(IMapper mapper,
                                     IStringLocalizer<SharedResources> localizer,
                                     IAuthorizationService authorizationService) : base(localizer)
         {
@@ -51,6 +52,21 @@ namespace SchoolProject.Core.Features.Authorization.Commands.Handlers
                 return Success(result);
             return BadRequest<string>(result);
         }
+
+        public async Task<Response<string>> Handle(UpdateUserRolesCommand request, CancellationToken cancellationToken)
+        {
+            var result = await _authorizationService.UpdateUserRolesAsync(request);
+            switch (result)
+            {
+                case "UserIsNull": return NotFound<string>(_localizer[SharedResourcesKeys.UserNotFound]);
+                case "FailedToRemoveOldRoles": return BadRequest<string>(_localizer[SharedResourcesKeys.FailedToRemoveOldClaims]);
+                case "FailedToAddNewRoles": return BadRequest<string>(_localizer[SharedResourcesKeys.FailedToAddNewClaims]);
+                case "FailedToUpdateUserRoles": return BadRequest<string>(_localizer[SharedResourcesKeys.FailedToUpdateUserCliams]);
+            }
+            return Success<string>(_localizer[SharedResourcesKeys.Success]);
+        }
+
+
         #endregion
     }
 }

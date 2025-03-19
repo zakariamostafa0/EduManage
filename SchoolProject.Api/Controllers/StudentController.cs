@@ -3,10 +3,9 @@ using SchoolProject.Core.Features.Students.Commands.Models;
 namespace SchoolProject.Api.Controllers
 {
     [ApiController]
-    [Authorize]
+    [Authorize(Roles = "Admin")]
     public class StudentController : AppControllerBase
     {
-
         [HttpGet(Router.StudentRouting.List)]
         public async Task<IActionResult> GetStudentsListAsync()
         {
@@ -27,6 +26,7 @@ namespace SchoolProject.Api.Controllers
             return NewResult(student);
         }
 
+        [Authorize(policy: "CreateStudent")]
         [HttpPost(Router.StudentRouting.Create)]
         public async Task<IActionResult> CreateStudentAsyns([FromBody] AddStudentCommand command)
         {
@@ -34,12 +34,14 @@ namespace SchoolProject.Api.Controllers
             return NewResult(response);
         }
 
-        [HttpPut(Router.StudentRouting.Edit)]
-        public async Task<IActionResult> EditStudentAsyns([FromBody] EditStudentCommand command)
+        [Authorize(policy: "UpdateStudent")]
+        [HttpPut(Router.StudentRouting.Update)]
+        public async Task<IActionResult> UpdateStudentAsyns([FromBody] EditStudentCommand command)
         {
             var response = await Mediator.Send(command);
             return NewResult(response);
         }
+        [Authorize(policy: "DeleteStudent")]
         [HttpDelete(Router.StudentRouting.Delete)]
         public async Task<IActionResult> DeleteStudentAsyns([FromRoute] int id)
         {

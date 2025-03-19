@@ -32,6 +32,14 @@
         public const string RefreshTokenIsExpired = "RefreshTokenIsExpired";
         public const string RemovalFailed = "RemovalFailed";
         public const string RoleNotExist = "RoleNotExist";//One or more specified roles do not exist.
+        public const string FailedToRemoveOldRoles = "FailedToRemoveOldRoles";
+        public const string FailedToAddNewRoles = "FailedToAddNewRoles";
+        public const string FailedToUpdateUserRoles = "FailedToUpdateUserRoles";
+        public const string FailedToRemoveOldClaims = "FailedToRemoveOldClaims";
+        public const string FailedToAddNewClaims = "FailedToAddNewClaims";
+        public const string FailedToUpdateUserCliams = "FailedToUpdateUserCliams";
+        public const string UserNotFound = "UserNotFound";
+
 
         public const string PasswordUppercase = "PasswordUppercase";
         public const string PasswordLowercase = "PasswordLowercase";
