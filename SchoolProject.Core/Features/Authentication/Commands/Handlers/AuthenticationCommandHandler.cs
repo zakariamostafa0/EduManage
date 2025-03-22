@@ -40,6 +40,8 @@ namespace SchoolProject.Core.Features.Authentication.Commands.Handlers
             var user = await _userManager.Users.SingleOrDefaultAsync(u => u.NormalizedUserName == username || u.NormalizedEmail == username);
             if (user == null || !await _userManager.CheckPasswordAsync(user, request.Password))
                 return BadRequest<JwtAuthResult>(_localizer[SharedResourcesKeys.Invalidlogin]);
+            if (!user.EmailConfirmed)
+                return BadRequest<JwtAuthResult>(_localizer[SharedResourcesKeys.EmailNotConfirmed]);
             //var loginResult = await _signInManager.CheckPasswordSignInAsync(user, request.Password, false);
             //if (loginResult.Succeeded)
             //    return BadRequest<string>(_localizer[SharedResourcesKeys.Invalidlogin]);

@@ -13,17 +13,20 @@ namespace SchoolProject.Core.Features.UserIdentity.Queries.Handlers
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly IMapper _mapper;
         private readonly IStringLocalizer<SharedResources> _localizer;
+        private readonly IApplicationUserService _applicationUserService;
         #endregion
 
         #region Construcors
         public UserQueryHandler(IStudentService studentService,
                                     IMapper mapper,
                                     IStringLocalizer<SharedResources> localizer,
-                                    UserManager<ApplicationUser> userManager) : base(localizer)
+                                    UserManager<ApplicationUser> userManager,
+                                    IApplicationUserService applicationUserService) : base(localizer)
         {
             _mapper = mapper;
             _localizer = localizer;
             _userManager = userManager;
+            _applicationUserService = applicationUserService;
         }
 
         #endregion
@@ -50,7 +53,6 @@ namespace SchoolProject.Core.Features.UserIdentity.Queries.Handlers
             return Success(userDTO);
 
         }
-
 
         #endregion
     }

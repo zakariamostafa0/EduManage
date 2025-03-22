@@ -43,6 +43,8 @@
             public const string Edit = Prefix + "/Edit";
             public const string ChangePassword = Prefix + "/ChangePassword";
             public const string Delete = Prefix + "/Delete" + StringId;
+            public const string SendEmailConfirmationAgain = Prefix + "/SendEmailConfirmationAgain";
+
             //public const string RemoveUserRoles = Prefix + "/RemoveUserRoles";
             //public const string AddUserRoles = Prefix + "/AddUserRoles";
 
@@ -61,7 +63,7 @@
             public const string Edit = Prefix + "/Edit";
             public const string ChangePassword = Prefix + "/ChangePassword";
             public const string Delete = Prefix + "/Delete" + StringId;
-
+            public const string ConfirmEmail = "/Api/Authentication/ConfirmEmail";
         }
 
         public static class AuthorizationRouting

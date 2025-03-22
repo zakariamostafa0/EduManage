@@ -5,7 +5,7 @@ using SchoolProject.Core.Features.UserIdentity.Queries.Models;
 namespace SchoolProject.Api.Controllers
 {
     [ApiController]
-    [Authorize(Roles = "Admin,User")]
+    //[Authorize(Roles = "Admin,User")]
     public class AccountController : AppControllerBase
     {
         [HttpPost(Router.AccountRouting.Create)]
@@ -42,6 +42,13 @@ namespace SchoolProject.Api.Controllers
         public async Task<IActionResult> GetUser([FromRoute] string id)
         {
             var response = await Mediator.Send(new DeleteUserCommand(id));
+            return NewResult(response);
+        }
+        [AllowAnonymous]
+        [HttpPost(Router.AccountRouting.SendEmailConfirmationAgain)]
+        public async Task<IActionResult> SendEmailConfirmationAgain([FromBody] SendEmailConfirmationAgainQuery query)
+        {
+            var response = await Mediator.Send(query);
             return NewResult(response);
         }
         //    [HttpPost(Router.AccountRouting.AddUserRoles)]
