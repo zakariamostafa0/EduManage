@@ -44,6 +44,9 @@
             public const string ChangePassword = Prefix + "/ChangePassword";
             public const string Delete = Prefix + "/Delete" + StringId;
             public const string SendEmailConfirmationAgain = Prefix + "/SendEmailConfirmationAgain";
+            public const string SendEmailResetPasswordCode = Prefix + "/SendEmailResetPasswordCode";
+            public const string ConfirmResetPasswordCode = Prefix + "/ConfirmResetPasswordCode";
+            public const string ResetPassword = "/api/account/resetassword";
 
             //public const string RemoveUserRoles = Prefix + "/RemoveUserRoles";
             //public const string AddUserRoles = Prefix + "/AddUserRoles";

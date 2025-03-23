@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using SchoolProject.Infrastructure.Data;
 
@@ -11,9 +12,11 @@ using SchoolProject.Infrastructure.Data;
 namespace SchoolProject.Infrastructure.Migrations
 {
     [DbContext(typeof(ApplicationDBContext))]
-    partial class ApplicationDBContextModelSnapshot : ModelSnapshot
+    [Migration("20250323093924_AddCodeEncryptColumn")]
+    partial class AddCodeEncryptColumn
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -196,12 +199,12 @@ namespace SchoolProject.Infrastructure.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "7854bdeb-6f93-4c52-9249-287ec968a176",
+                            Id = "1e5f31f9-b235-47ad-ad94-75deb231ad2b",
                             Name = "Admin"
                         },
                         new
                         {
-                            Id = "1893b9b0-b159-47fc-b14a-4d1b7252e341",
+                            Id = "d7e284fb-ae1e-4cf5-883e-a4ebcce662ae",
                             Name = "User"
                         });
                 });

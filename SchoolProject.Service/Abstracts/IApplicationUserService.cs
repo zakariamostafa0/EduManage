@@ -6,5 +6,8 @@ namespace SchoolProject.Service.Abstracts
     {
         public Task<string> AddUserAsync(ApplicationUser user, string password);
         public Task<string> SendEmailConfirmationAgain(string userEmail);
+        public Task<string> ResetPassword(string userId, string token, string password);
+        public Task<string> SendResetPasswordEmail(string email);
+
     }
 }
