@@ -1,5 +1,4 @@
-﻿using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Identity;
+﻿using Microsoft.AspNetCore.Identity;
 using SchoolProject.Core.Features.UserIdentity.Commands.Models;
 using SchoolProject.Data.Entities.Identity;
 
@@ -8,7 +7,8 @@ namespace SchoolProject.Core.Features.UserIdentity.Commands.Handlers
     public class UserCommandHandler : ResponseHandler,
                                       IRequestHandler<AddUserCommand, Response<bool>>,
                                       IRequestHandler<UpdateUserCommand, Response<bool>>,
-                                      IRequestHandler<ChangePasswordCommand, Response<string>>
+                                      IRequestHandler<ChangePasswordCommand, Response<string>>,
+                                      IRequestHandler<SendEmailConfirmationAgainQuery, Response<string>>
     //IRequestHandler<UpdateUserRoleCommand, Response<bool>>
     {
         #region Fields
@@ -16,7 +16,7 @@ namespace SchoolProject.Core.Features.UserIdentity.Commands.Handlers
         private readonly RoleManager<ApplicationRole> _roleManager;
         private readonly IMapper _mapper;
         private readonly IStringLocalizer<SharedResources> _localizer;
-        private readonly IHttpContextAccessor _httpContextAccessor;
+        private readonly IApplicationUserService _applicationUserService;
         #endregion
 
         #region Construcors
@@ -25,13 +25,13 @@ namespace SchoolProject.Core.Features.UserIdentity.Commands.Handlers
                                     IStringLocalizer<SharedResources> localizer,
                                     IUserService userService,
                                     RoleManager<ApplicationRole> roleManager,
-                                    IHttpContextAccessor httpContextAccessor) : base(localizer)
+                                    IApplicationUserService applicationUserService) : base(localizer)
         {
             _mapper = mapper;
             _localizer = localizer;
             _userService = userService;
             _roleManager = roleManager;
-            _httpContextAccessor = httpContextAccessor;
+            _applicationUserService = applicationUserService;
         }
 
         #endregion
@@ -39,26 +39,51 @@ namespace SchoolProject.Core.Features.UserIdentity.Commands.Handlers
         #region Handle Methods
         public async Task<Response<bool>> Handle(AddUserCommand request, CancellationToken cancellationToken)
         {
-            //if email exists?
-            var email = await _userService.UserManager.FindByEmailAsync(request.Email);
-            if (email != null)
-                return BadRequest<bool>(_localizer[SharedResourcesKeys.EmailExist]);
-            //if user name exist?
-            var username = await _userService.UserManager.FindByNameAsync(request.UserName);
-            if (username != null)
-                return BadRequest<bool>(_localizer[SharedResourcesKeys.UsernameTaken]);
+            ////if email exists?
+            //var email = await _userService.UserManager.FindByEmailAsync(request.Email);
+            //if (email != null)
+            //    return BadRequest<bool>(_localizer[SharedResourcesKeys.EmailExist]);
+            ////if user name exist?
+            //var username = await _userService.UserManager.FindByNameAsync(request.UserName);
+            //if (username != null)
+            //    return BadRequest<bool>(_localizer[SharedResourcesKeys.UsernameTaken]);
+
+
             //created?
             var user = _mapper.Map<ApplicationUser>(request);
-            var result = await _userService.UserManager.CreateAsync(user, request.Password);
-            if (!result.Succeeded)
+            //var result = await _userService.UserManager.CreateAsync(user, request.Password);
+            //if (!result.Succeeded)
+            //{
+            //    var errors = result.Errors.Select(e => e.Description).ToList();
+            //    return BadRequest<bool>(_localizer[SharedResourcesKeys.CreationFaild], errors);
+            //}
+
+            //await _userService.UserManager.AddToRoleAsync(user, "User");
+
+            ////send confirm email
+            //var code = await _userService.UserManager.GenerateEmailConfirmationTokenAsync(user);
+            //var requsetAccessor = _httpContextAccessor.HttpContext.Request;
+            //var returnURL = requsetAccessor.Scheme + "://" + requsetAccessor.Host + $"/Api/V1/Authentication/ConfirmEmail?userId={user.Id}&code={code}";
+
+            //var sendEmailResult = await _emailService.SendEmailAsync("zeko10199@gmail.com", returnURL, "Email Confirmation");
+            //if (sendEmailResult != "Success")
+            //    return BadRequest<bool>(_localizer[SharedResourcesKeys.SendEmailFailes]);
+
+            var result = await _applicationUserService.AddUserAsync(user, request.Password);
+            switch (result)
             {
-                var errors = result.Errors.Select(e => e.Description).ToList();
-                return BadRequest<bool>(_localizer[SharedResourcesKeys.CreationFaild], errors);
+                case "EmailExist": return NotFound<bool>(_localizer[SharedResourcesKeys.EmailExist]);
+                case "UserNameExist": return BadRequest<bool>(_localizer[SharedResourcesKeys.UsernameTaken]);
+                case "FailedToCreateUser": return BadRequest<bool>(_localizer[SharedResourcesKeys.CreationFaild]);
+                case "Success":
+                    {
+                        var create = Created(true);
+                        create.Meta = new { Id = user.Id, Name = user.FirstName + " " + user.LastName, PhoneNumber = user.PhoneNumber };
+                        return create;
+                    }
+
+                default: return BadRequest<bool>(result);
             }
-            await _userService.UserManager.AddToRoleAsync(user, "User");
-            var create = Created<bool>(true);
-            create.Meta = new { Id = user.Id, Name = user.FirstName + " " + user.LastName, PhoneNumber = user.PhoneNumber };
-            return create;
         }
 
         public async Task<Response<bool>> Handle(UpdateUserCommand request, CancellationToken cancellationToken)
@@ -103,6 +128,13 @@ namespace SchoolProject.Core.Features.UserIdentity.Commands.Handlers
                 return BadRequest<string>(_localizer[SharedResourcesKeys.UpdatedFaild], errors);
             }
             return Success<string>(_localizer[SharedResourcesKeys.PasswordChanged]);
+        }
+        public async Task<Response<string>> Handle(SendEmailConfirmationAgainQuery request, CancellationToken cancellationToken)
+        {
+            var result = await _applicationUserService.SendEmailConfirmationAgain(request.Email);
+            if (result != "Success")
+                return BadRequest<string>(_localizer[SharedResourcesKeys.ErrorEmailConfirmation]);
+            return Success(result);
         }
 
         //public async Task<Response<bool>> Handle(UpdateUserRoleCommand request, CancellationToken cancellationToken)

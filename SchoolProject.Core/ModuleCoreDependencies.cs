@@ -1,4 +1,5 @@
 ﻿using FluentValidation;
+using Microsoft.AspNetCore.Mvc.Infrastructure;
 using Microsoft.Extensions.DependencyInjection;
 using SchoolProject.Core.Behaviour;
 using System.Reflection;
@@ -15,6 +16,7 @@ namespace SchoolProject.Core
             services.AddValidatorsFromAssembly(Assembly.GetExecutingAssembly());
             // 
             services.AddTransient(typeof(IPipelineBehavior<,>), typeof(ValidationBehavior<,>));
+            services.AddSingleton<IActionContextAccessor, ActionContextAccessor>();
             return services;
         }
     }

@@ -38,7 +38,16 @@
         public const string FailedToRemoveOldClaims = "FailedToRemoveOldClaims";
         public const string FailedToAddNewClaims = "FailedToAddNewClaims";
         public const string FailedToUpdateUserCliams = "FailedToUpdateUserCliams";
+        public const string SendEmailFailes = "SendEmailFailes";
+        public const string EmailNotConfirmed = "EmailNotConfirmed";
+        public const string Expired = "Expired";
         public const string UserNotFound = "UserNotFound";
+        public const string ErrorEmailConfirmation = "ErrorEmailConfirmation";
+
+
+        //Properties Names
+        public const string Email = "Email";
+        public const string Message = "Message";
 
 
         public const string PasswordUppercase = "PasswordUppercase";

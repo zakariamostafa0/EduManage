@@ -126,6 +126,9 @@
   <data name="Delete" xml:space="preserve">
     <value>تم حذفه بنجاح</value>
   </data>
+  <data name="Email" xml:space="preserve">
+    <value>البريد الإلكتروني</value>
+  </data>
   <data name="EmailExist" xml:space="preserve">
     <value>هذا البريد موجود بالفعل!</value>
   </data>
@@ -140,6 +143,9 @@
   </data>
   <data name="Maximum" xml:space="preserve">
     <value>يجب ألا يكون طوله أكبر من </value>
+  </data>
+  <data name="Message" xml:space="preserve">
+    <value>الرسالة</value>
   </data>
   <data name="Minimum" xml:space="preserve">
     <value>يجب ألا يكون طوله أقل من</value>

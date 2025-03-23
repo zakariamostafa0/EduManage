@@ -126,6 +126,9 @@
   <data name="Delete" xml:space="preserve">
     <value>Deleted Successfully</value>
   </data>
+  <data name="Email" xml:space="preserve">
+    <value>Email</value>
+  </data>
   <data name="EmailExist" xml:space="preserve">
     <value>This email is already exists!</value>
   </data>
@@ -140,6 +143,9 @@
   </data>
   <data name="Maximum" xml:space="preserve">
     <value>maximum leanght must not bigger than </value>
+  </data>
+  <data name="Message" xml:space="preserve">
+    <value>Message</value>
   </data>
   <data name="Minimum" xml:space="preserve">
     <value>Minimum length must not smaller than</value>

@@ -11,6 +11,6 @@ namespace SchoolProject.Service.Abstracts
         public Task<(string, DateTime?)> ValidateDetails(JwtSecurityToken jwtSecurityToken, string accessToken, string refreshToken);
         public Task<JwtAuthResult> GetRefreshToken(ApplicationUser user, JwtSecurityToken token, DateTime? expiryDate, string refreshToken);
         public Task<string> ValidateToken(string accessToken);
-
+        public Task<string> ConfirmEmail(string userId, string code);
     }
 }
