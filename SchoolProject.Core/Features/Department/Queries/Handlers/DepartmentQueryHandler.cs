@@ -4,7 +4,9 @@ using SchoolProject.Core.Features.Department.Queries.Results;
 namespace SchoolProject.Core.Features.Department.Queries.Handlers
 {
     public class DepartmentQueryHandler : ResponseHandler,
-                                        IRequestHandler<GetDepartmentByIdQuery, Response<GetDepartmentByIdResponse>>
+                                        IRequestHandler<GetDepartmentByIdQuery, Response<GetDepartmentByIdResponse>>,
+                                        IRequestHandler<GetDepartmentsStudentsCountQuery, Response<List<GetDepartmentsStudentsCountResult>>>
+
     {
         #region Fields
         private readonly IStringLocalizer<SharedResources> _localizer;
@@ -40,6 +42,15 @@ namespace SchoolProject.Core.Features.Department.Queries.Handlers
             Mapper.StudentListPagination = StudentsAfterPagination;
             return Success(Mapper);
         }
+
+        public async Task<Response<List<GetDepartmentsStudentsCountResult>>> Handle(GetDepartmentsStudentsCountQuery request, CancellationToken cancellationToken)
+        {
+            var viewDepartmentsResult = await _departmentService.GetViewDepartments();
+            var result = _mapper.Map<List<GetDepartmentsStudentsCountResult>>(viewDepartmentsResult);
+            return Success(result);
+        }
+
+
         #endregion
     }
 }

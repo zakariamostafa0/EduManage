@@ -5,6 +5,7 @@
         public DepartmentProfile()
         {
             GetDepartmentByIdMapping();
+            GetDepartmentStudentsCountMapping();
         }
     }
 }

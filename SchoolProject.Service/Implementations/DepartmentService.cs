@@ -1,17 +1,26 @@
 ﻿
+using SchoolProject.Data.Entities.Views;
+using SchoolProject.Infrastructure.Views;
+
 namespace SchoolProject.Service.Implementations
 {
     public class DepartmentService : IDepartmentService
     {
         #region Fields
         private readonly IDepartmentRepository _departmentRepository;
+        private readonly IViewRepository<ViewDepartment> _viewDepartmentRepository;
 
         #endregion
 
         #region Constructors
-        public DepartmentService(IDepartmentRepository departmentRepository)
+        public DepartmentService
+         (
+            IDepartmentRepository departmentRepository,
+            IViewRepository<ViewDepartment> viewDepartmentRepository
+         )
         {
             _departmentRepository = departmentRepository;
+            _viewDepartmentRepository = viewDepartmentRepository;
         }
 
 
@@ -25,6 +34,12 @@ namespace SchoolProject.Service.Implementations
                                                 .Include(x => x.Instructor)
                                                 .Include(x => x.DeptSubjects).ThenInclude(ds => ds.Subject).FirstOrDefaultAsync();
             return department;
+        }
+
+        public async Task<List<ViewDepartment>> GetViewDepartments()
+        {
+            var viewDepartment = await _viewDepartmentRepository.GetTableNoTracking().ToListAsync();
+            return viewDepartment;
         }
 
         public async Task<bool> IsDepartmentExist(int id)

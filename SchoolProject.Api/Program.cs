@@ -1,4 +1,3 @@
-using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Localization;
 using Microsoft.AspNetCore.Mvc.Infrastructure;
 using Microsoft.AspNetCore.Mvc.Routing;
@@ -7,10 +6,8 @@ using Microsoft.Extensions.Options;
 using SchoolProject.Core;
 using SchoolProject.Core.AuthFilters;
 using SchoolProject.Core.MiddlWares;
-using SchoolProject.Data.Entities.Identity;
 using SchoolProject.Infrastructure;
 using SchoolProject.Infrastructure.Data;
-using SchoolProject.Infrastructure.Seeder;
 using SchoolProject.Service;
 using System.Globalization;
 
@@ -89,13 +86,13 @@ builder.Services.AddScoped<IUrlHelper>(x =>
 builder.Services.AddTransient<AuthFilter>();
 
 var app = builder.Build();
-using (var scope = app.Services.CreateScope())
-{
-    var userManager = scope.ServiceProvider.GetRequiredService<UserManager<ApplicationUser>>();
-    var roleManager = scope.ServiceProvider.GetRequiredService<RoleManager<ApplicationRole>>();
-    await RoleSeeder.SeedAsync(roleManager);
-    await UserSeeder.SeedAsync(userManager);
-}
+//using (var scope = app.Services.CreateScope())
+//{
+//    var userManager = scope.ServiceProvider.GetRequiredService<UserManager<ApplicationUser>>();
+//    var roleManager = scope.ServiceProvider.GetRequiredService<RoleManager<ApplicationRole>>();
+//    await RoleSeeder.SeedAsync(roleManager);
+//    await UserSeeder.SeedAsync(userManager);
+//}
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
