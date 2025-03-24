@@ -1,6 +1,8 @@
 ﻿
+using SchoolProject.Data.Entities.Procedure;
 using SchoolProject.Data.Entities.Views;
-using SchoolProject.Infrastructure.Views;
+using SchoolProject.Infrastructure.Abstracts.Procedure;
+using SchoolProject.Infrastructure.Abstracts.Views;
 
 namespace SchoolProject.Service.Implementations
 {
@@ -9,18 +11,19 @@ namespace SchoolProject.Service.Implementations
         #region Fields
         private readonly IDepartmentRepository _departmentRepository;
         private readonly IViewRepository<ViewDepartment> _viewDepartmentRepository;
-
+        private readonly IProcedureRepository _procedureRepository;
         #endregion
 
         #region Constructors
         public DepartmentService
          (
             IDepartmentRepository departmentRepository,
-            IViewRepository<ViewDepartment> viewDepartmentRepository
-         )
+            IViewRepository<ViewDepartment> viewDepartmentRepository,
+            IProcedureRepository procedureRepository)
         {
             _departmentRepository = departmentRepository;
             _viewDepartmentRepository = viewDepartmentRepository;
+            _procedureRepository = procedureRepository;
         }
 
 
@@ -48,6 +51,10 @@ namespace SchoolProject.Service.Implementations
             if (department == null)
                 return false;
             return true;
+        }
+        public async Task<IReadOnlyList<DepartmentStudentsCountProc>> GetDepartmentStudentsCountProc(DepartmentStudentsCountProcParmeters parmeters)
+        {
+            return await _procedureRepository.GetDepartmentStudentsCountProc(parmeters);
         }
         #endregion
     }

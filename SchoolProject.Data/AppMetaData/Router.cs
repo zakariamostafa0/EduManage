@@ -31,6 +31,7 @@
             public const string Edit = Prefix + "/Edit";
             public const string Delete = Prefix + "/Delete" + IntId;
             public const string GetDepartmentsStudentsCount = Prefix + "Departments-Students-Count";
+            public const string GetDepartmentStudentsCountById = Prefix + "Departments-Students-Count" + IntId;
 
 
         }

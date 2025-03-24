@@ -1,7 +1,10 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using SchoolProject.Data.Entities.Views;
+using SchoolProject.Infrastructure.Abstracts.Procedure;
+using SchoolProject.Infrastructure.Abstracts.Views;
 using SchoolProject.Infrastructure.Repositories;
-using SchoolProject.Infrastructure.Views;
+using SchoolProject.Infrastructure.Repositories.Procedure;
+using SchoolProject.Infrastructure.Repositories.Views;
 
 namespace SchoolProject.Infrastructure
 {
@@ -16,6 +19,9 @@ namespace SchoolProject.Infrastructure
 
             //View 
             services.AddTransient<IViewRepository<ViewDepartment>, ViewDepartmentRepository>();
+
+            //Procedures 
+            services.AddTransient<IProcedureRepository, ProcedureRepository>();
 
             return services;
         }

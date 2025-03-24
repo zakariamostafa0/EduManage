@@ -1,7 +1,7 @@
 ﻿using SchoolProject.Data.Entities.Views;
-using SchoolProject.Infrastructure.Views;
+using SchoolProject.Infrastructure.Abstracts.Views;
 
-namespace SchoolProject.Infrastructure.Repositories
+namespace SchoolProject.Infrastructure.Repositories.Views
 {
     public class ViewDepartmentRepository : GenericRepositoryAsync<ViewDepartment>, IViewRepository<ViewDepartment>
     {
