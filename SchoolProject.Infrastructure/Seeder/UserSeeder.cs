@@ -17,7 +17,7 @@ namespace SchoolProject.Infrastructure.Seeder
                     Address = "Cairo",
                     Email = "admin@admin.com",
                     UserName = "admin",
-                    Country = "Egypt",
+                    //Country = "Egypt",
                     PhoneNumber = "1000000000",
                     EmailConfirmed = true,
                     PhoneNumberConfirmed = true

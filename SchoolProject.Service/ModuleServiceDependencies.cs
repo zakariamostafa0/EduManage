@@ -1,4 +1,6 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
+using SchoolProject.Service.AuthService.Implementaions;
+using SchoolProject.Service.AuthService.Interfaces;
 using SchoolProject.Service.Implementations;
 
 namespace SchoolProject.Service
@@ -14,6 +16,8 @@ namespace SchoolProject.Service
             services.AddScoped<IAuthorizationService, AuthorizationService>();
             services.AddScoped<IEmailService, EmailService>();
             services.AddScoped<IApplicationUserService, ApplicationUserService>();
+            services.AddScoped<ICurrentUserService, CurrentUserService>();
+
             // services.AddSingleton(new ConcurrentDictionary<string, RefreshToken>());
             return services;
         }

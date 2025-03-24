@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Authorization;
+using SchoolProject.Core.AuthFilters;
 using SchoolProject.Core.Features.Students.Commands.Models;
 namespace SchoolProject.Api.Controllers
 {
@@ -6,6 +7,8 @@ namespace SchoolProject.Api.Controllers
     [Authorize(Roles = "Admin")]
     public class StudentController : AppControllerBase
     {
+        [Authorize(Roles = "User")]
+        [ServiceFilter(typeof(AuthFilter))]
         [HttpGet(Router.StudentRouting.List)]
         public async Task<IActionResult> GetStudentsListAsync()
         {

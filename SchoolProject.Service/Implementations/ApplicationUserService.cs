@@ -96,6 +96,38 @@ namespace SchoolProject.Service.Implementations
             return await _emailService.SendEmailAsync("zeko10199@gmail.com", messageBody, "Email Confirmation");
 
         }
+
+        public async Task<string> SendResetPasswordEmail(string email)
+        {
+            var user = await _userManager.FindByEmailAsync(email);
+            if (user == null)
+                return ("UserNotFound");
+
+            // Generate password reset token
+            var token = await _userManager.GeneratePasswordResetTokenAsync(user);
+
+            // Build the reset URL
+            var request = _httpContextAccessor.HttpContext.Request;
+            var resetUrl = $"{request.Scheme}://{request.Host}/api/Account/resetassword?userId={user.Id}&token={token}";
+
+            // Send email
+            string message = resetUrl;
+
+            await _emailService.SendEmailAsync("zeko10199@gmail.com", message, "Reset Password");
+            return "Success";
+        }
+        public async Task<string> ResetPassword(string userId, string token, string password)
+        {
+            var user = await _userManager.FindByIdAsync(userId);
+            if (user == null)
+                return ("Invaliduser");
+
+            var result = await _userManager.ResetPasswordAsync(user, token, password);
+            if (!result.Succeeded)
+                return (string.Join(", ", result.Errors.Select(e => e.Description)));
+
+            return "Success";
+        }
         #endregion
     }
 }

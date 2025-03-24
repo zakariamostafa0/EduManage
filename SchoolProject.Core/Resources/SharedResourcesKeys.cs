@@ -43,6 +43,9 @@
         public const string Expired = "Expired";
         public const string UserNotFound = "UserNotFound";
         public const string ErrorEmailConfirmation = "ErrorEmailConfirmation";
+        public const string PasswordNotEqualConfirmPass = "PasswordNotEqualConfirmPass";
+        public const string TryAgainInAnotherTime = "TryAgainInAnotherTime";
+        public const string InvaildCode = "InvaildCode";
 
 
         //Properties Names

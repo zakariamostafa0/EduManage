@@ -39,9 +39,9 @@ namespace SchoolProject.Core.Features.UserIdentity.Commands.Validators
                 .NotEmpty().WithMessage(_localizer[SharedResourcesKeys.NotEmpty])
                 .MaximumLength(100).WithMessage($"{_localizer[SharedResourcesKeys.Maximum]} " + "100");
 
-            RuleFor(r => r.Country)
-                .NotEmpty().WithMessage(_localizer[SharedResourcesKeys.NotEmpty])
-                .MaximumLength(50).WithMessage($"{_localizer[SharedResourcesKeys.Maximum]} " + "50");
+            //RuleFor(r => r.Country)
+            //    .NotEmpty().WithMessage(_localizer[SharedResourcesKeys.NotEmpty])
+            //    .MaximumLength(50).WithMessage($"{_localizer[SharedResourcesKeys.Maximum]} " + "50");
 
             RuleFor(r => r.Email)
                 .NotEmpty().WithMessage(_localizer[SharedResourcesKeys.Required])

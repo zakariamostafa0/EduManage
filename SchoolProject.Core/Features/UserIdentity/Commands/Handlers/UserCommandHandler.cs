@@ -8,7 +8,9 @@ namespace SchoolProject.Core.Features.UserIdentity.Commands.Handlers
                                       IRequestHandler<AddUserCommand, Response<bool>>,
                                       IRequestHandler<UpdateUserCommand, Response<bool>>,
                                       IRequestHandler<ChangePasswordCommand, Response<string>>,
-                                      IRequestHandler<SendEmailConfirmationAgainQuery, Response<string>>
+                                      IRequestHandler<SendEmailConfirmationAgainQuery, Response<string>>,
+                                      IRequestHandler<SendEmailResetPasswordCommand, Response<string>>,
+                                      IRequestHandler<ResetPasswordCommand, Response<string>>
     //IRequestHandler<UpdateUserRoleCommand, Response<bool>>
     {
         #region Fields
@@ -39,35 +41,7 @@ namespace SchoolProject.Core.Features.UserIdentity.Commands.Handlers
         #region Handle Methods
         public async Task<Response<bool>> Handle(AddUserCommand request, CancellationToken cancellationToken)
         {
-            ////if email exists?
-            //var email = await _userService.UserManager.FindByEmailAsync(request.Email);
-            //if (email != null)
-            //    return BadRequest<bool>(_localizer[SharedResourcesKeys.EmailExist]);
-            ////if user name exist?
-            //var username = await _userService.UserManager.FindByNameAsync(request.UserName);
-            //if (username != null)
-            //    return BadRequest<bool>(_localizer[SharedResourcesKeys.UsernameTaken]);
-
-
-            //created?
             var user = _mapper.Map<ApplicationUser>(request);
-            //var result = await _userService.UserManager.CreateAsync(user, request.Password);
-            //if (!result.Succeeded)
-            //{
-            //    var errors = result.Errors.Select(e => e.Description).ToList();
-            //    return BadRequest<bool>(_localizer[SharedResourcesKeys.CreationFaild], errors);
-            //}
-
-            //await _userService.UserManager.AddToRoleAsync(user, "User");
-
-            ////send confirm email
-            //var code = await _userService.UserManager.GenerateEmailConfirmationTokenAsync(user);
-            //var requsetAccessor = _httpContextAccessor.HttpContext.Request;
-            //var returnURL = requsetAccessor.Scheme + "://" + requsetAccessor.Host + $"/Api/V1/Authentication/ConfirmEmail?userId={user.Id}&code={code}";
-
-            //var sendEmailResult = await _emailService.SendEmailAsync("zeko10199@gmail.com", returnURL, "Email Confirmation");
-            //if (sendEmailResult != "Success")
-            //    return BadRequest<bool>(_localizer[SharedResourcesKeys.SendEmailFailes]);
 
             var result = await _applicationUserService.AddUserAsync(user, request.Password);
             switch (result)
@@ -135,6 +109,22 @@ namespace SchoolProject.Core.Features.UserIdentity.Commands.Handlers
             if (result != "Success")
                 return BadRequest<string>(_localizer[SharedResourcesKeys.ErrorEmailConfirmation]);
             return Success(result);
+        }
+
+        public async Task<Response<string>> Handle(SendEmailResetPasswordCommand request, CancellationToken cancellationToken)
+        {
+            var result = await _applicationUserService.SendResetPasswordEmail(request.Email);
+            if (result != "Success")
+                return BadRequest<string>(_localizer[SharedResourcesKeys.UserNotFound]);
+            return Success<string>("");
+        }
+
+        public async Task<Response<string>> Handle(ResetPasswordCommand request, CancellationToken cancellationToken)
+        {
+            var result = await _applicationUserService.ResetPassword(request.UserId, request.Token, request.NewPassword);
+            if (result != "Success")
+                return BadRequest<string>(result);
+            return Success<string>("");
         }
 
         //public async Task<Response<bool>> Handle(UpdateUserRoleCommand request, CancellationToken cancellationToken)
