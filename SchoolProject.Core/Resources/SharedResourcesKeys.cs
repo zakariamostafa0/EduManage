@@ -46,6 +46,9 @@
         public const string PasswordNotEqualConfirmPass = "PasswordNotEqualConfirmPass";
         public const string TryAgainInAnotherTime = "TryAgainInAnotherTime";
         public const string InvaildCode = "InvaildCode";
+        public const string NoImage = "NoImage";
+        public const string AddFailed = "AddFailed";
+        public const string FailedToUploadImage = "FailedToUploadImage";
 
 
         //Properties Names

@@ -1,5 +1,12 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
+using SchoolProject.Data.Entities.Views;
+using SchoolProject.Infrastructure.Abstracts.Functions;
+using SchoolProject.Infrastructure.Abstracts.Procedure;
+using SchoolProject.Infrastructure.Abstracts.Views;
 using SchoolProject.Infrastructure.Repositories;
+using SchoolProject.Infrastructure.Repositories.Functions;
+using SchoolProject.Infrastructure.Repositories.Procedure;
+using SchoolProject.Infrastructure.Repositories.Views;
 
 namespace SchoolProject.Infrastructure
 {
@@ -9,8 +16,18 @@ namespace SchoolProject.Infrastructure
         {
             services.AddTransient<IStudentRepository, StudentRepository>();
             services.AddTransient<IDepartmentRepository, DepartmentRepository>();
+            services.AddTransient<IInstructorsRepository, InstructorsRepository>();
             services.AddTransient<IRefreshTokenRepository, RefreshTokenRepository>();
             services.AddTransient(typeof(IGenericRepositoryAsync<>), typeof(GenericRepositoryAsync<>));
+
+            //View 
+            services.AddTransient<IViewRepository<ViewDepartment>, ViewDepartmentRepository>();
+
+            //Procedures 
+            services.AddTransient<IProcedureRepository, ProcedureRepository>();
+
+            //Procedures 
+            services.AddTransient<IInstructorFunctionsRepository, InstructorFunctionsRepository>();
             return services;
         }
     }

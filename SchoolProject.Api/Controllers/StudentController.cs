@@ -1,14 +1,13 @@
 ﻿using Microsoft.AspNetCore.Authorization;
-using SchoolProject.Core.AuthFilters;
 using SchoolProject.Core.Features.Students.Commands.Models;
 namespace SchoolProject.Api.Controllers
 {
     [ApiController]
-    [Authorize(Roles = "Admin")]
+    //[Authorize(Roles = "Admin")]
     public class StudentController : AppControllerBase
     {
-        [Authorize(Roles = "User")]
-        [ServiceFilter(typeof(AuthFilter))]
+        //[Authorize(Roles = "User")]
+        //[ServiceFilter(typeof(AuthFilter))]
         [HttpGet(Router.StudentRouting.List)]
         public async Task<IActionResult> GetStudentsListAsync()
         {
@@ -29,7 +28,7 @@ namespace SchoolProject.Api.Controllers
             return NewResult(student);
         }
 
-        [Authorize(policy: "CreateStudent")]
+        //[Authorize(policy: "CreateStudent")]
         [HttpPost(Router.StudentRouting.Create)]
         public async Task<IActionResult> CreateStudentAsyns([FromBody] AddStudentCommand command)
         {

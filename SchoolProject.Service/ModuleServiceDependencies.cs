@@ -11,12 +11,14 @@ namespace SchoolProject.Service
         {
             services.AddScoped<IStudentService, StudentService>();
             services.AddScoped<IDepartmentService, DepartmentService>();
+            services.AddScoped<IInstructorService, InstructorService>();
             services.AddScoped<IUserService, UserService>();
             services.AddScoped<IAuthenticationService, AuthenticationService>();
             services.AddScoped<IAuthorizationService, AuthorizationService>();
             services.AddScoped<IEmailService, EmailService>();
             services.AddScoped<IApplicationUserService, ApplicationUserService>();
             services.AddScoped<ICurrentUserService, CurrentUserService>();
+            services.AddScoped<IFileService, FileService>();
 
             // services.AddSingleton(new ConcurrentDictionary<string, RefreshToken>());
             return services;

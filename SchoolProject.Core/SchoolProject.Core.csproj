@@ -28,7 +28,9 @@
     <Folder Include="Features\Emails\Queries\Handlers\" />
     <Folder Include="Features\Emails\Queries\Models\" />
     <Folder Include="Features\Emails\Queries\Results\" />
+    <Folder Include="Features\Instructors\Queries\Results\" />
     <Folder Include="Mapping\Departments\CommandMapping\" />
+    <Folder Include="Mapping\Instructors\QueryMapping\" />
     <Folder Include="Mapping\RoleIdentity\CommandMapping\" />
   </ItemGroup>
 
