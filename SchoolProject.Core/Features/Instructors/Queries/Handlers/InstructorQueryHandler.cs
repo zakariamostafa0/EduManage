@@ -1,6 +1,6 @@
-﻿using SchoolProject.Core.Features.Instructor.Queries.Models;
+﻿using SchoolProject.Core.Features.Instructors.Queries.Models;
 
-namespace SchoolProject.Core.Features.Instructor.Queries.Handlers
+namespace SchoolProject.Core.Features.Instructors.Queries.Handlers
 {
     public class InstructorQueryHandler : ResponseHandler,
                             IRequestHandler<GetInstructorsSalarySummationQuery, Response<decimal>>

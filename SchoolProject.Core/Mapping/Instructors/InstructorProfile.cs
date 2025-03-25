@@ -1,6 +1,10 @@
 ﻿namespace SchoolProject.Core.Mapping.Instructors
 {
-    public class InstructorProfile : Profile
+    public partial class InstructorProfile : Profile
     {
+        public InstructorProfile()
+        {
+            AddInstructorCommandMapping();
+        }
     }
 }

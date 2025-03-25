@@ -50,27 +50,63 @@ namespace SchoolProject.Service.Implementations
             if (student == null) return false;
             return true;
         }
+        //public async Task<string> AddInstructorAsync(Instructor instructor, IFormFile file)
+        //{
+        //    var context = _httpContextAccessor.HttpContext.Request;
+        //    var baseUrl = context.Scheme + "://" + context.Host;
+        //    var imageUrl = await _fileService.UploadImage("Instructors", file);
+        //    switch (imageUrl)
+        //    {
+        //        case "NoImage": return "NoImage";
+        //        case "FailedToUploadImage": return "FailedToUploadImage";
+        //    }
+        //    instructor.Image = baseUrl + imageUrl;
+        //    try
+        //    {
+        //        await _instructorsRepository.AddAsync(instructor);
+        //        return "Success";
+        //    }
+        //    catch (Exception)
+        //    {
+        //        return "FailedInAdd";
+        //    }
+        //}
+
         public async Task<string> AddInstructorAsync(Instructor instructor, IFormFile file)
         {
-            var context = _httpContextAccessor.HttpContext.Request;
-            var baseUrl = context.Scheme + "://" + context.Host;
-            var imageUrl = await _fileService.UploadImage("Instructors", file);
-            switch (imageUrl)
-            {
-                case "NoImage": return "NoImage";
-                case "FailedToUploadImage": return "FailedToUploadImage";
-            }
-            instructor.Image = baseUrl + imageUrl;
             try
             {
+                // Default to null (allows adding instructor without image)
+                string? imageUrl = null;
+
+                // Check if a file is provided and valid
+                if (file != null && file.Length > 0)
+                {
+                    imageUrl = await _fileService.UploadImage("Instructors", file);
+
+                    if (imageUrl == "FailedToUploadImage")
+                        return "FailedToUploadImage";
+                }
+
+                // Construct base URL safely
+                var request = _httpContextAccessor.HttpContext?.Request;
+                var baseUrl = request != null ? $"{request.Scheme}://{request.Host}" : "https://defaultdomain.com";
+
+                // Store the full image URL or leave it as null
+                instructor.Image = imageUrl != null ? $"{baseUrl}{imageUrl}" : null;
+
+                // Save to database
                 await _instructorsRepository.AddAsync(instructor);
                 return "Success";
             }
-            catch (Exception)
+            catch (Exception ex)
             {
+                Console.WriteLine($"Error adding instructor: {ex.Message}");
                 return "FailedInAdd";
             }
         }
+
+
         #endregion
     }
 }
