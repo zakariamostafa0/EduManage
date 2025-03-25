@@ -35,6 +35,19 @@
 
 
         }
+        public static class InstructorRouting
+        {
+            public const string Prefix = Rule + "Instructor";
+            public const string List = Prefix /*+ "/List"*/;
+            public const string GetById = Prefix + IntId;
+            public const string Create = Prefix /*+ "/Create"*/;
+            public const string Paginate = Prefix + "/Paginate";
+            public const string Update = Prefix /*+ "/Update"*/;
+            public const string Delete = Prefix /*+ "/Delete"*/ + IntId;
+
+            public const string GetSalarySummation = Prefix + "/GetSalarySummation";
+
+        }
         public static class AccountRouting
         {
             public const string Prefix = Rule + "Account";

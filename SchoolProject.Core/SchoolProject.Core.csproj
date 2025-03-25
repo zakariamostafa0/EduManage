@@ -28,7 +28,13 @@
     <Folder Include="Features\Emails\Queries\Handlers\" />
     <Folder Include="Features\Emails\Queries\Models\" />
     <Folder Include="Features\Emails\Queries\Results\" />
+    <Folder Include="Features\Instructor\Commands\Handlers\" />
+    <Folder Include="Features\Instructor\Commands\Models\" />
+    <Folder Include="Features\Instructor\Commands\Validators\" />
+    <Folder Include="Features\Instructor\Queries\Results\" />
     <Folder Include="Mapping\Departments\CommandMapping\" />
+    <Folder Include="Mapping\Instructors\CommandMapping\" />
+    <Folder Include="Mapping\Instructors\QueryMapping\" />
     <Folder Include="Mapping\RoleIdentity\CommandMapping\" />
   </ItemGroup>
 
