@@ -9,6 +9,7 @@ using SchoolProject.Core.MiddlWares;
 using SchoolProject.Infrastructure;
 using SchoolProject.Infrastructure.Data;
 using SchoolProject.Service;
+using Serilog;
 using System.Globalization;
 
 
@@ -84,6 +85,11 @@ builder.Services.AddScoped<IUrlHelper>(x =>
 });
 
 builder.Services.AddTransient<AuthFilter>();
+
+//Serilog
+Log.Logger = new LoggerConfiguration()
+              .ReadFrom.Configuration(builder.Configuration).CreateLogger();
+builder.Services.AddSerilog();
 
 var app = builder.Build();
 //using (var scope = app.Services.CreateScope())

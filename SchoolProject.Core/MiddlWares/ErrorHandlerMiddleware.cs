@@ -1,5 +1,5 @@
 ﻿using Microsoft.AspNetCore.Http;
-using Microsoft.EntityFrameworkCore;
+using Serilog;
 using System.Net;
 using System.Text.Json;
 
@@ -26,6 +26,7 @@ namespace SchoolProject.Core.MiddlWares
                 response.ContentType = "application/json";
                 var responseModel = new Response<string>() { Succeeded = false, Message = error?.Message };
                 //TODO:: cover all validation errors
+                Log.Error(error, error.Message, context.Request, "");
                 switch (error)
                 {
                     case UnauthorizedAccessException e:

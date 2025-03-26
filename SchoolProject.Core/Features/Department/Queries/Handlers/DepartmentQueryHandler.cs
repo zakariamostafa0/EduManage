@@ -1,6 +1,7 @@
 ﻿using SchoolProject.Core.Features.Department.Queries.Models;
 using SchoolProject.Core.Features.Department.Queries.Results;
 using SchoolProject.Data.Entities.Procedure;
+using Serilog;
 
 namespace SchoolProject.Core.Features.Department.Queries.Handlers
 {
@@ -42,6 +43,7 @@ namespace SchoolProject.Core.Features.Department.Queries.Handlers
             var StudentQuery = _studentService.GetAllStudentsByDepartmentIdQueryable(request.Id);
             var StudentsAfterPagination = await StudentQuery.Select(expression).ToPaginatedListAsync(request.StudentPageNumber, request.StudentPageSize);
             Mapper.StudentListPagination = StudentsAfterPagination;
+            Log.Information("Hello from Serilog");
             return Success(Mapper);
         }
 
