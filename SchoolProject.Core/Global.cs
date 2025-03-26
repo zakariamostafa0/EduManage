@@ -10,8 +10,8 @@ global using SchoolProject.Core.Wrapper;
 global using SchoolProject.Data.Entities;
 global using SchoolProject.Data.Results;
 global using SchoolProject.Service.Abstracts;
+global using Serilog;
 global using System.Linq.Expressions;
-
 
 
 

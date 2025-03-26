@@ -108,9 +108,10 @@
                 await transaction.CommitAsync();
                 return true;
             }
-            catch
+            catch (Exception ex)
             {
                 await transaction.RollbackAsync();
+                Log.Error(ex.Message);
                 return false;
             }
 

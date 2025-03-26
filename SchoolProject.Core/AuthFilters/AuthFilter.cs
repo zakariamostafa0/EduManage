@@ -19,7 +19,7 @@ namespace SchoolProject.Core.AuthFilters
             if (context.HttpContext.User.Identity.IsAuthenticated)
             {
                 var roles = await _currentUserService.GetCurrentUserRolesAsync();
-                if (roles.All(x => x != "User"))
+                if (roles.All(x => x != nameof(UserRoles.Admin)))
                 {
                     context.Result = new ObjectResult("Forbidden")
                     {

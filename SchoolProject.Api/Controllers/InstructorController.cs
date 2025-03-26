@@ -1,9 +1,11 @@
-﻿using SchoolProject.Core.Features.Instructors.Commands.Models;
+﻿using Microsoft.AspNetCore.Authorization;
+using SchoolProject.Core.Features.Instructors.Commands.Models;
 using SchoolProject.Core.Features.Instructors.Queries.Models;
 
 namespace SchoolProject.Api.Controllers
 {
     [ApiController]
+    [Authorize(Roles = nameof(UserRoles.Admin))]
     public class InstructorController : AppControllerBase
     {
         [HttpGet(Router.InstructorRouting.GetSalarySummation)]
