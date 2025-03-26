@@ -1,13 +1,12 @@
 ﻿using Microsoft.AspNetCore.Authorization;
+using SchoolProject.Core.AuthFilters;
 using SchoolProject.Core.Features.Students.Commands.Models;
 namespace SchoolProject.Api.Controllers
 {
     [ApiController]
-    //[Authorize(Roles = "Admin")]
+    [Authorize(Roles = $"{nameof(UserRoles.Admin)},{nameof(UserRoles.Instructor)}")]
     public class StudentController : AppControllerBase
     {
-        //[Authorize(Roles = "User")]
-        //[ServiceFilter(typeof(AuthFilter))]
         [HttpGet(Router.StudentRouting.List)]
         public async Task<IActionResult> GetStudentsListAsync()
         {
@@ -28,7 +27,7 @@ namespace SchoolProject.Api.Controllers
             return NewResult(student);
         }
 
-        //[Authorize(policy: "CreateStudent")]
+        [Authorize(policy: "CreateStudent")]
         [HttpPost(Router.StudentRouting.Create)]
         public async Task<IActionResult> CreateStudentAsyns([FromBody] AddStudentCommand command)
         {
@@ -36,6 +35,7 @@ namespace SchoolProject.Api.Controllers
             return NewResult(response);
         }
 
+        [ServiceFilter(typeof(AuthFilter))]
         [Authorize(policy: "UpdateStudent")]
         [HttpPut(Router.StudentRouting.Update)]
         public async Task<IActionResult> UpdateStudentAsyns([FromBody] EditStudentCommand command)
@@ -43,7 +43,9 @@ namespace SchoolProject.Api.Controllers
             var response = await Mediator.Send(command);
             return NewResult(response);
         }
-        //[Authorize(policy: "DeleteStudent")]
+
+        [ServiceFilter(typeof(AuthFilter))]
+        [Authorize(policy: "DeleteStudent")]
         [HttpDelete(Router.StudentRouting.Delete)]
         public async Task<IActionResult> DeleteStudentAsyns([FromRoute] int id)
         {

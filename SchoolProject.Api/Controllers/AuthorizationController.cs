@@ -1,10 +1,11 @@
-﻿using SchoolProject.Core.Features.Authorization.Commands.Models;
+﻿using Microsoft.AspNetCore.Authorization;
+using SchoolProject.Core.Features.Authorization.Commands.Models;
 using SchoolProject.Core.Features.Authorization.Queries.Models;
 
 namespace SchoolProject.Api.Controllers
 {
     [ApiController]
-    //[Authorize]
+    [Authorize(Roles = nameof(UserRoles.Admin))]
     public class AuthorizationController : AppControllerBase
     {
         [HttpGet(Router.AuthorizationRouting.GetAllRoles)]

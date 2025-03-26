@@ -5,7 +5,7 @@ using SchoolProject.Core.Features.UserIdentity.Queries.Models;
 namespace SchoolProject.Api.Controllers
 {
     [ApiController]
-    //[Authorize(Roles = "Admin,User")]
+    [Authorize(Roles = $"{nameof(UserRoles.Admin)},{nameof(UserRoles.User)}")]
     public class AccountController : AppControllerBase
     {
         [HttpPost(Router.AccountRouting.Create)]

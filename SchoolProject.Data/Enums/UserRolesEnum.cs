@@ -4,8 +4,7 @@
     {
         Admin,
         User,
-        Manager,
-        Teacher,
+        Instructor,
         Student
     }
 
