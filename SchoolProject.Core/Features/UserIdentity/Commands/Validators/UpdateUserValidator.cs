@@ -70,7 +70,7 @@ namespace SchoolProject.Core.Features.UserIdentity.Commands.Validators
 
             RuleFor(r => r.UserName)
                 .MustAsync(async (model, Key, CancellationToken) =>
-                    !await _userService.IsUserNameExist(Key, model.Id))
+                    await _userService.IsUserNameExist(Key, model.Id))
                             .WithMessage(_localizer[SharedResourcesKeys.UsernameTaken]);
 
         }
